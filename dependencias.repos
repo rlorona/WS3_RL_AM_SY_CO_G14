@@ -1,0 +1,23 @@
+# Repositorios externos del taller (version probada el 2026-10-02).
+# Uso, desde ~/practica_03/src:   vcs import < dependencias.repos
+repositories:
+  clearpath_ws/src/clearpath_simulator:
+    type: git
+    url: https://github.com/clearpathrobotics/clearpath_simulator.git
+    version: 199464f0051d4e3cbffe4c744188367a39a38df6  # rama jazzy
+  clearpath_ws/src/clearpath_common:
+    type: git
+    url: https://github.com/clearpathrobotics/clearpath_common.git
+    version: 726d7fba367f18e53899d3ac03f0b276380ae847  # rama jazzy
+  clearpath_ws/src/clearpath_config:
+    type: git
+    url: https://github.com/clearpathrobotics/clearpath_config.git
+    version: 4897cd1311deabadb887293eb300dcb31e74d666  # rama jazzy
+  clearpath_ws/src/clearpath_msgs:
+    type: git
+    url: https://github.com/clearpathrobotics/clearpath_msgs.git
+    version: 797be60abaa140167629f246802c2802a616a495  # rama jazzy
+  clearpath_ws/src/clearpath_desktop:
+    type: git
+    url: https://github.com/clearpathrobotics/clearpath_desktop.git
+    version: 0b990c607be45e87eeb072f22c41073b19b0b896  # rama jazzy

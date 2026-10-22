@@ -1,0 +1,11 @@
+# Controlador para el nivel 2 del taller: recibe directamente la velocidad
+# angular de cada rueda (rad/s) en lugar de (vx, vy, w).
+/**/wheel_velocity_controller:
+  ros__parameters:
+    type: forward_command_controller/ForwardCommandController
+    joints:
+      - front_left_wheel_joint
+      - front_right_wheel_joint
+      - rear_left_wheel_joint
+      - rear_right_wheel_joint
+    interface_name: velocity
