@@ -1,4 +1,4 @@
-# Controlador para el nivel 2 del taller: recibe directamente la velocidad
+# Controlador propio de la parte 1 del taller: recibe directamente la velocidad
 # angular de cada rueda (rad/s) en lugar de (vx, vy, w).
 /**/wheel_velocity_controller:
   ros__parameters:

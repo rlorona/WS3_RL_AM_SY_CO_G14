@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:39:58</created>
+    <modified>2026-10-25T22:39:58</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="madera-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4851499 0.2622507 0.1022417 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="madera-material" name="madera">
+      <instance_effect url="#madera-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="mesa_support_s2-mesh" name="mesa_support_s2">
+      <mesh>
+        <source id="mesa_support_s2-mesh-positions">
+          <float_array id="mesa_support_s2-mesh-positions-array" count="120">-0.5499992 -0.3499999 0.73 -0.5499992 -0.3499999 0.77 -0.5499992 0.3499999 0.73 -0.5499992 0.3499999 0.77 0.5499992 -0.3499999 0.73 0.5499992 -0.3499999 0.77 0.5499992 0.3499999 0.73 0.5499992 0.3499999 0.77 -0.4849987 -0.2849999 0 -0.4849987 -0.2849999 0.73 -0.4849987 -0.2150001 0 -0.4849987 -0.2150001 0.73 -0.414999 -0.2849999 0 -0.414999 -0.2849999 0.73 -0.414999 -0.2150001 0 -0.414999 -0.2150001 0.73 0.4150009 -0.2849999 0 0.4150009 -0.2849999 0.73 0.4150009 -0.2150001 0 0.4150009 -0.2150001 0.73 0.4850006 -0.2849999 0 0.4850006 -0.2849999 0.73 0.4850006 -0.2150001 0 0.4850006 -0.2150001 0.73 -0.4849987 0.2150001 0 -0.4849987 0.2150001 0.73 -0.4849987 0.2849999 0 -0.4849987 0.2849999 0.73 -0.414999 0.2150001 0 -0.414999 0.2150001 0.73 -0.414999 0.2849999 0 -0.414999 0.2849999 0.73 0.4150009 0.2150001 0 0.4150009 0.2150001 0.73 0.4150009 0.2849999 0 0.4150009 0.2849999 0.73 0.4850006 0.2150001 0 0.4850006 0.2150001 0.73 0.4850006 0.2849999 0 0.4850006 0.2849999 0.73</float_array>
+          <technique_common>
+            <accessor source="#mesa_support_s2-mesh-positions-array" count="40" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="mesa_support_s2-mesh-normals">
+          <float_array id="mesa_support_s2-mesh-normals-array" count="180">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#mesa_support_s2-mesh-normals-array" count="60" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="mesa_support_s2-mesh-vertices">
+          <input semantic="POSITION" source="#mesa_support_s2-mesh-positions"/>
+        </vertices>
+        <triangles material="madera-material" count="60">
+          <input semantic="VERTEX" source="#mesa_support_s2-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#mesa_support_s2-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 11 11 13 11 15 11 17 12 18 12 16 12 19 13 22 13 18 13 23 14 20 14 22 14 21 15 16 15 20 15 22 16 16 16 18 16 19 17 21 17 23 17 25 18 26 18 24 18 27 19 30 19 26 19 31 20 28 20 30 20 29 21 24 21 28 21 30 22 24 22 26 22 27 23 29 23 31 23 33 24 34 24 32 24 35 25 38 25 34 25 39 26 36 26 38 26 37 27 32 27 36 27 38 28 32 28 34 28 35 29 37 29 39 29 1 30 3 30 2 30 3 31 7 31 6 31 7 32 5 32 4 32 5 33 1 33 0 33 6 34 4 34 0 34 3 35 1 35 5 35 9 36 11 36 10 36 11 37 15 37 14 37 15 38 13 38 12 38 13 39 9 39 8 39 14 40 12 40 8 40 11 41 9 41 13 41 17 42 19 42 18 42 19 43 23 43 22 43 23 44 21 44 20 44 21 45 17 45 16 45 22 46 20 46 16 46 19 47 17 47 21 47 25 48 27 48 26 48 27 49 31 49 30 49 31 50 29 50 28 50 29 51 25 51 24 51 30 52 28 52 24 52 27 53 25 53 29 53 33 54 35 54 34 54 35 55 39 55 38 55 39 56 37 56 36 56 37 57 33 57 32 57 38 58 36 58 32 58 35 59 33 59 37 59</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="mesa_support_s2" name="mesa_support_s2" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#mesa_support_s2-mesh" name="mesa_support_s2">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="madera-material" target="#madera-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

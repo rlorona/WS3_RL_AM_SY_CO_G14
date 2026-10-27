@@ -13,6 +13,7 @@ setup(
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + '/launch', glob('launch/*.py')),
         ('share/' + package_name + '/config', glob('config/*.yaml')),
+        ('share/' + package_name + '/rviz', glob('rviz/*.rviz')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -23,12 +24,8 @@ setup(
     # Nodos ya registrados: "ros2 run taller_omni <nombre>"
     entry_points={
         'console_scripts': [
-            'nivel1 = taller_omni.nivel1:main',
-            'nivel2 = taller_omni.nivel2:main',
-            'nivel3 = taller_omni.nivel3:main',
-            'pose_real = taller_omni.pose_real:main',
+            'self_controller = taller_omni.self_controller:main',
             'graficar = taller_omni.graficar:main',
-            'reiniciar = taller_omni.reiniciar:main',
         ],
     },
 )

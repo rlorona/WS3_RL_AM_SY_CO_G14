@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:40:08</created>
+    <modified>2026-10-25T22:40:08</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="madera-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4851499 0.2622507 0.1022417 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="madera_oscura-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.06847817 0.03310477 0.02121901 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="madera-material" name="madera">
+      <instance_effect url="#madera-effect"/>
+    </material>
+    <material id="madera_oscura-material" name="madera_oscura">
+      <instance_effect url="#madera_oscura-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="equipo_mecanico-mesh" name="equipo_mecanico">
+      <mesh>
+        <source id="equipo_mecanico-mesh-positions">
+          <float_array id="equipo_mecanico-mesh-positions-array" count="48">-1.049999 -0.6999998 0 -1.049999 -0.6999998 1.9 -1.049999 0.6999998 0 -1.049999 0.6999998 1.9 1.049999 -0.6999998 0 1.049999 -0.6999998 1.9 1.049999 0.6999998 0 1.049999 0.6999998 1.9 -1.07 -0.7200003 1.9 -1.07 -0.7200003 1.94 -1.07 0.7200003 1.9 -1.07 0.7200003 1.94 1.07 -0.7200003 1.9 1.07 -0.7200003 1.94 1.07 0.7200003 1.9 1.07 0.7200003 1.94</float_array>
+          <technique_common>
+            <accessor source="#equipo_mecanico-mesh-positions-array" count="16" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="equipo_mecanico-mesh-normals">
+          <float_array id="equipo_mecanico-mesh-normals-array" count="72">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#equipo_mecanico-mesh-normals-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="equipo_mecanico-mesh-vertices">
+          <input semantic="POSITION" source="#equipo_mecanico-mesh-positions"/>
+        </vertices>
+        <triangles material="madera-material" count="12">
+          <input semantic="VERTEX" source="#equipo_mecanico-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#equipo_mecanico-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 1 12 3 12 2 12 3 13 7 13 6 13 7 14 5 14 4 14 5 15 1 15 0 15 6 16 4 16 0 16 3 17 1 17 5 17</p>
+        </triangles>
+        <triangles material="madera_oscura-material" count="12">
+          <input semantic="VERTEX" source="#equipo_mecanico-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#equipo_mecanico-mesh-normals" offset="1"/>
+          <p>9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 11 11 13 11 15 11 9 18 11 18 10 18 11 19 15 19 14 19 15 20 13 20 12 20 13 21 9 21 8 21 14 22 12 22 8 22 11 23 9 23 13 23</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="equipo_mecanico" name="equipo_mecanico" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#equipo_mecanico-mesh" name="equipo_mecanico">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="madera-material" target="#madera-material"/>
+              <instance_material symbol="madera_oscura-material" target="#madera_oscura-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

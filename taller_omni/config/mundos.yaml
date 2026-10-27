@@ -1,0 +1,40 @@
+# Mundos disponibles para el workshop 03.
+#   ros2 launch mundos_workshop dingo.launch.py mundo:=<clave>
+#
+# El mundo es worlds/<clave>.sdf y sus piezas estan en models/.
+#
+# world:  nombre del <world> dentro del SDF (Gazebo lo usa en sus topics y servicios)
+# inicio: posicion inicial del Dingo-O [x, y, yaw] en metros y radianes. Se eligio
+#         como una celda libre con 0,5 m de holgura alrededor del robot.
+arena:
+  descripcion: Arena de 6 x 6 m con paredes, para probar trayectorias
+  world: arena
+  inicio: [0.0, -1.5, 0.0]        # centrado en x, 1,5 m por debajo del centro
+coral:
+  descripcion: Laboratorio CoRAL (plano PL-002), con la jaula de drones
+  world: coral
+  inicio: [-4.875, -0.3, 0.0]     # centro-abajo de la jaula
+casa:
+  descripcion: Vivienda de una planta, 17 x 9 m, 19 ambientes
+  world: casa_world
+  inicio: [15.07, 4.57, 0.0]      # antesala; los cuartos pequenos no admiten el Dingo-O
+oficina_0:
+  descripcion: Oficina pequena con 5 despachos, 11 x 9,75 m
+  world: oficina_0_world
+  inicio: [2.07, 3.12, 0.0]
+oficina_1:
+  descripcion: Planta abierta con salas perimetrales, 19,3 x 10,65 m
+  world: oficina_1_world
+  inicio: [6.17, 1.98, 0.0]       # cocina, junto al acceso principal
+oficina_2:
+  descripcion: Planta alargada con despachos privados y patio, 13,5 x 22,8 m
+  world: oficina_2_world
+  inicio: [6.77, 20.33, 0.0]      # lounge, acceso norte
+oficina_3:
+  descripcion: Salon de belleza con muros curvos, 14,4 x 18 m
+  world: oficina_3_world
+  inicio: [5.82, 1.38, 0.0]       # acceso por la fachada sur
+oficina_4:
+  descripcion: Clinica de ortodoncia con muros curvos, 32 x 18,15 m
+  world: oficina_4_world
+  inicio: [3.22, 11.73, 0.0]      # recepcion

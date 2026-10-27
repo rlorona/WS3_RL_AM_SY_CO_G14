@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:40:05</created>
+    <modified>2026-10-25T22:40:05</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="madera-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4851499 0.2622507 0.1022417 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="madera_oscura-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.06847817 0.03310477 0.02121901 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="madera-material" name="madera">
+      <instance_effect url="#madera-effect"/>
+    </material>
+    <material id="madera_oscura-material" name="madera_oscura">
+      <instance_effect url="#madera_oscura-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="expositor_curvo_s-mesh" name="expositor_curvo_s">
+      <mesh>
+        <source id="expositor_curvo_s-mesh-positions">
+          <float_array id="expositor_curvo_s-mesh-positions-array" count="192">-0.2024631 -0.544323 0 -0.2024631 -0.544323 1.7 -0.4901991 -0.2664595 0 -0.4901991 -0.2664595 1.7 -0.0120573 -0.3471518 0 -0.0120573 -0.3471518 1.7 -0.2997933 -0.06928825 0 -0.2997933 -0.06928825 1.7 -0.006310462 -0.3407693 0 -0.006310462 -0.3407693 1.7 -0.3127289 -0.08365392 0 -0.3127289 -0.08365392 1.7 0.169878 -0.1307959 0 0.169878 -0.1307959 1.7 -0.1365404 0.1263194 0 -0.1365404 0.1263194 1.7 0.1751661 -0.1240282 0 0.1751661 -0.1240282 1.7 -0.1484403 0.1110858 0 -0.1484403 0.1110858 1.7 0.336278 0.09772396 0 0.336278 0.09772396 1.7 0.01267147 0.3328381 0 0.01267147 0.3328381 1.7 0.3410807 0.104844 0 0.3410807 0.104844 1.7 0.001861572 0.3168116 0 0.001861572 0.3168116 1.7 0.4863319 0.3372946 0 0.4863319 0.3372946 1.7 0.1471128 0.5492621 0 0.1471128 0.5492621 1.7 -0.1808834 -0.5651627 1.7 -0.1808834 -0.5651627 1.75 -0.5117798 -0.2456197 1.7 -0.5117798 -0.2456197 1.75 0.009523391 -0.3679915 1.7 0.009523391 -0.3679915 1.75 -0.321373 -0.04844856 1.7 -0.321373 -0.04844856 1.75 0.01667022 -0.3600526 1.7 0.01667022 -0.3600526 1.75 -0.3357096 -0.06437063 1.7 -0.3357096 -0.06437063 1.75 0.1928586 -0.1500792 1.7 0.1928586 -0.1500792 1.75 -0.1595211 0.1456027 1.7 -0.1595211 0.1456027 1.75 0.1994361 -0.1416616 1.7 0.1994361 -0.1416616 1.75 -0.1727113 0.1287193 1.7 -0.1727113 0.1287193 1.75 0.360549 0.08009052 1.7 0.360549 0.08009052 1.75 -0.01159858 0.3504715 1.7 -0.01159858 0.3504715 1.75 0.3665218 0.08894634 1.7 0.3665218 0.08894634 1.75 -0.02357959 0.3327093 1.7 -0.02357959 0.3327093 1.75 0.5117731 0.3213968 1.7 0.5117731 0.3213968 1.75 0.1216716 0.5651598 1.7 0.1216716 0.5651598 1.75</float_array>
+          <technique_common>
+            <accessor source="#expositor_curvo_s-mesh-positions-array" count="64" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="expositor_curvo_s-mesh-normals">
+          <float_array id="expositor_curvo_s-mesh-normals-array" count="288">-0.6946585 -0.7193396 0 -0.7193402 0.694658 0 0.6946585 0.7193396 0 0.7193402 -0.694658 0 0 0 -1 0 0 1 -0.6427873 -0.7660447 0 -0.7660446 0.6427874 0 0.6427873 0.7660447 0 0.7660446 -0.6427874 0 0 0 -1 0 0 1 -0.5877857 -0.8090168 0 -0.809018 0.5877839 0 0.5877857 0.8090168 0 0.809018 -0.5877839 0 0 0 -1 0 0 1 -0.529919 -0.8480483 0 -0.8480479 0.5299195 0 0.529919 0.8480483 0 0.8480479 -0.5299195 0 0 0 -1 0 0 1 -0.6946583 -0.7193399 0 -0.7193384 0.6946598 0 0.6946583 0.7193399 0 0.7193384 -0.6946598 0 0 0 -1 0 0 1 -0.6427879 -0.7660442 0 -0.7660446 0.6427875 0 0.6427879 0.7660442 0 0.7660446 -0.6427875 0 0 0 -1 0 0 1 -0.5877852 -0.8090171 0 -0.8090162 0.5877863 0 0.5877852 0.8090171 0 0.8090162 -0.5877863 0 0 0 -1 0 0 1 -0.5299201 -0.8480476 0 -0.848048 0.5299196 0 0.5299201 0.8480476 0 0.848048 -0.5299196 0 0 0 -1 0 0 1 -0.6946585 -0.7193396 0 -0.7193402 0.694658 0 0.6946585 0.7193396 0 0.7193402 -0.694658 0 0 0 -1 0 0 1 -0.6427873 -0.7660447 0 -0.7660446 0.6427874 0 0.6427873 0.7660447 0 0.7660446 -0.6427874 0 0 0 -1 0 0 1 -0.5877857 -0.8090168 0 -0.809018 0.5877839 0 0.5877857 0.8090168 0 0.809018 -0.5877839 0 0 0 -1 0 0 1 -0.529919 -0.8480483 0 -0.8480479 0.5299195 0 0.529919 0.8480483 0 0.8480479 -0.5299195 0 0 0 -1 0 0 1 -0.6946583 -0.7193399 0 -0.7193384 0.6946598 0 0.6946583 0.7193399 0 0.7193384 -0.6946598 0 0 0 -1 0 0 1 -0.6427879 -0.7660442 0 -0.7660446 0.6427875 0 0.6427879 0.7660442 0 0.7660446 -0.6427875 0 0 0 -1 0 0 1 -0.5877852 -0.8090171 0 -0.8090162 0.5877863 0 0.5877852 0.8090171 0 0.8090162 -0.5877863 0 0 0 -1 0 0 1 -0.5299201 -0.8480476 0 -0.848048 0.5299196 0 0.5299201 0.8480476 0 0.848048 -0.5299196 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#expositor_curvo_s-mesh-normals-array" count="96" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="expositor_curvo_s-mesh-vertices">
+          <input semantic="POSITION" source="#expositor_curvo_s-mesh-positions"/>
+        </vertices>
+        <triangles material="madera-material" count="48">
+          <input semantic="VERTEX" source="#expositor_curvo_s-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#expositor_curvo_s-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 2 4 4 4 0 4 3 5 5 5 7 5 9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 15 11 9 11 13 11 17 12 18 12 16 12 19 13 22 13 18 13 23 14 20 14 22 14 21 15 16 15 20 15 18 16 20 16 16 16 19 17 21 17 23 17 25 18 26 18 24 18 27 19 30 19 26 19 31 20 28 20 30 20 29 21 24 21 28 21 30 22 24 22 26 22 31 23 25 23 29 23 1 48 3 48 2 48 3 49 7 49 6 49 7 50 5 50 4 50 5 51 1 51 0 51 2 52 6 52 4 52 3 53 1 53 5 53 9 54 11 54 10 54 11 55 15 55 14 55 15 56 13 56 12 56 13 57 9 57 8 57 14 58 12 58 8 58 15 59 11 59 9 59 17 60 19 60 18 60 19 61 23 61 22 61 23 62 21 62 20 62 21 63 17 63 16 63 18 64 22 64 20 64 19 65 17 65 21 65 25 66 27 66 26 66 27 67 31 67 30 67 31 68 29 68 28 68 29 69 25 69 24 69 30 70 28 70 24 70 31 71 27 71 25 71</p>
+        </triangles>
+        <triangles material="madera_oscura-material" count="48">
+          <input semantic="VERTEX" source="#expositor_curvo_s-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#expositor_curvo_s-mesh-normals" offset="1"/>
+          <p>33 24 34 24 32 24 35 25 38 25 34 25 39 26 36 26 38 26 37 27 32 27 36 27 38 28 32 28 34 28 39 29 33 29 37 29 41 30 42 30 40 30 43 31 46 31 42 31 47 32 44 32 46 32 45 33 40 33 44 33 42 34 44 34 40 34 43 35 45 35 47 35 49 36 50 36 48 36 51 37 54 37 50 37 55 38 52 38 54 38 53 39 48 39 52 39 54 40 48 40 50 40 55 41 49 41 53 41 57 42 58 42 56 42 59 43 62 43 58 43 63 44 60 44 62 44 61 45 56 45 60 45 58 46 60 46 56 46 59 47 61 47 63 47 33 72 35 72 34 72 35 73 39 73 38 73 39 74 37 74 36 74 37 75 33 75 32 75 38 76 36 76 32 76 39 77 35 77 33 77 41 78 43 78 42 78 43 79 47 79 46 79 47 80 45 80 44 80 45 81 41 81 40 81 42 82 46 82 44 82 43 83 41 83 45 83 49 84 51 84 50 84 51 85 55 85 54 85 55 86 53 86 52 86 53 87 49 87 48 87 54 88 52 88 48 88 55 89 51 89 49 89 57 90 59 90 58 90 59 91 63 91 62 91 63 92 61 92 60 92 61 93 57 93 56 93 58 94 62 94 60 94 59 95 57 95 61 95</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="expositor_curvo_s" name="expositor_curvo_s" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#expositor_curvo_s-mesh" name="expositor_curvo_s">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="madera-material" target="#madera-material"/>
+              <instance_material symbol="madera_oscura-material" target="#madera_oscura-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

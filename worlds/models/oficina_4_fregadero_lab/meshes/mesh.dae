@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:40:08</created>
+    <modified>2026-10-25T22:40:08</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="acero-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.2622507 0.2622507 0.2622507 1</color>
+            </diffuse>
+            <reflectivity>
+              <float sid="specular">0.9</float>
+            </reflectivity>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="acero-material" name="acero">
+      <instance_effect url="#acero-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="fregadero_lab-mesh" name="fregadero_lab">
+      <mesh>
+        <source id="fregadero_lab-mesh-positions">
+          <float_array id="fregadero_lab-mesh-positions-array" count="96">0.3099995 0.2199993 0 0.3099995 0.2199993 0.1399999 0.3099995 -0.2199993 0 0.3099995 -0.2199993 0.1399999 -0.3099995 0.2199993 0 -0.3099995 0.2199993 0.1399999 -0.3099995 -0.2199993 0 -0.3099995 -0.2199993 0.1399999 0.2800007 0.1900005 0 0.2800007 0.1900005 0.01999998 0.2800007 -0.1900005 0 0.2800007 -0.1900005 0.01999998 -0.2800007 0.1900005 0 -0.2800007 0.1900005 0.01999998 -0.2800007 -0.1900005 0 -0.2800007 -0.1900005 0.01999998 0 0.2200012 0.1099999 0 0.2200012 0.3899999 0.01414299 0.2141437 0.1099999 0.01414299 0.2141437 0.3899999 0.02000045 0.2000007 0.1099999 0.02000045 0.2000007 0.3899999 0.01414299 0.1858577 0.1099999 0.01414299 0.1858577 0.3899999 0 0.1800003 0.1099999 0 0.1800003 0.3899999 -0.01414299 0.1858577 0.1099999 -0.01414299 0.1858577 0.3899999 -0.02000045 0.2000007 0.1099999 -0.02000045 0.2000007 0.3899999 -0.01414299 0.2141437 0.1099999 -0.01414299 0.2141437 0.3899999</float_array>
+          <technique_common>
+            <accessor source="#fregadero_lab-mesh-positions-array" count="32" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="fregadero_lab-mesh-normals">
+          <float_array id="fregadero_lab-mesh-normals-array" count="156">1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 0.3826416 0.9238969 0 0.9238969 0.3826416 0 0.9238969 -0.3826416 0 0.3826416 -0.9238969 0 -0.3826416 -0.9238969 0 -0.9238969 -0.3826416 0 0 0 1 -0.9238969 0.3826416 0 -0.3826416 0.9238969 0 0 0 -1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 0.3826416 0.9238969 0 0.9238969 0.3826416 0 0.9238969 -0.3826416 0 0.3826416 -0.9238969 0 -0.3826416 -0.9238969 0 -0.9238969 -0.3826416 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.9238969 0.3826416 0 -0.3826416 0.9238969 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#fregadero_lab-mesh-normals-array" count="52" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="fregadero_lab-mesh-vertices">
+          <input semantic="POSITION" source="#fregadero_lab-mesh-positions"/>
+        </vertices>
+        <triangles material="acero-material" count="52">
+          <input semantic="VERTEX" source="#fregadero_lab-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#fregadero_lab-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 11 11 13 11 15 11 17 12 18 12 16 12 19 13 20 13 18 13 21 14 22 14 20 14 23 15 24 15 22 15 25 16 26 16 24 16 27 17 28 17 26 17 29 18 25 18 21 18 29 19 30 19 28 19 31 20 16 20 30 20 28 21 30 21 22 21 1 22 3 22 2 22 3 23 7 23 6 23 7 24 5 24 4 24 5 25 1 25 0 25 6 26 4 26 0 26 3 27 1 27 5 27 9 28 11 28 10 28 11 29 15 29 14 29 15 30 13 30 12 30 13 31 9 31 8 31 14 32 12 32 8 32 11 33 9 33 13 33 17 34 19 34 18 34 19 35 21 35 20 35 21 36 23 36 22 36 23 37 25 37 24 37 25 38 27 38 26 38 27 39 29 39 28 39 21 40 19 40 17 40 17 41 31 41 29 41 29 42 27 42 25 42 25 43 23 43 21 43 21 44 17 44 29 44 29 45 31 45 30 45 31 46 17 46 16 46 30 47 16 47 18 47 18 48 20 48 30 48 20 49 22 49 30 49 22 50 24 50 26 50 26 51 28 51 22 51</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="fregadero_lab" name="fregadero_lab" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#fregadero_lab-mesh" name="fregadero_lab">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="acero-material" target="#acero-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:39:51</created>
+    <modified>2026-10-25T22:39:51</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="madera-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4851499 0.2622507 0.1022417 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="madera_clara-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.6444797 0.456411 0.2622507 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="madera-material" name="madera">
+      <instance_effect url="#madera-effect"/>
+    </material>
+    <material id="madera_clara-material" name="madera_clara">
+      <instance_effect url="#madera_clara-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="veladora_dorm2_b-mesh" name="veladora_dorm2_b">
+      <mesh>
+        <source id="veladora_dorm2_b-mesh-positions">
+          <float_array id="veladora_dorm2_b-mesh-positions-array" count="72">0.2249999 0.1999998 0 0.2249999 0.1999998 0.52 0.2249999 -0.1999998 0 0.2249999 -0.1999998 0.52 -0.2249999 0.1999998 0 -0.2249999 0.1999998 0.52 -0.2249999 -0.1999998 0 -0.2249999 -0.1999998 0.52 0.1849999 0.2200002 0.27 0.1849999 0.2200002 0.41 0.1849999 0.1999998 0.27 0.1849999 0.1999998 0.41 -0.1849999 0.2200002 0.27 -0.1849999 0.2200002 0.41 -0.1849999 0.1999998 0.27 -0.1849999 0.1999998 0.41 0.2449998 0.2200002 0.5200001 0.2449998 0.2200002 0.56 0.2450001 -0.2200002 0.5200001 0.2450001 -0.2200002 0.56 -0.2450001 0.2200002 0.5200001 -0.2450001 0.2200002 0.56 -0.2449998 -0.2200002 0.5200001 -0.2449998 -0.2200002 0.56</float_array>
+          <technique_common>
+            <accessor source="#veladora_dorm2_b-mesh-positions-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="veladora_dorm2_b-mesh-normals">
+          <float_array id="veladora_dorm2_b-mesh-normals-array" count="108">1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 5.4186e-7 0 0 -1 0 -1 -5.4186e-7 0 0 1 0 0 0 -1 0 0 1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 0 0 0 -1 0 -1 0 0 0 1 0 0 0 -1 0 0 1 1 5.4186e-7 0 0 -1 0 -1 -5.4186e-7 0 0 1 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#veladora_dorm2_b-mesh-normals-array" count="36" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="veladora_dorm2_b-mesh-vertices">
+          <input semantic="POSITION" source="#veladora_dorm2_b-mesh-positions"/>
+        </vertices>
+        <triangles material="madera-material" count="12">
+          <input semantic="VERTEX" source="#veladora_dorm2_b-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#veladora_dorm2_b-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 1 18 3 18 2 18 3 19 7 19 6 19 7 20 5 20 4 20 5 21 1 21 0 21 6 22 4 22 0 22 3 23 1 23 5 23</p>
+        </triangles>
+        <triangles material="madera_clara-material" count="24">
+          <input semantic="VERTEX" source="#veladora_dorm2_b-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#veladora_dorm2_b-mesh-normals" offset="1"/>
+          <p>9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 11 11 13 11 15 11 17 12 18 12 16 12 19 13 22 13 18 13 23 14 20 14 22 14 21 15 16 15 20 15 22 16 16 16 18 16 23 17 17 17 21 17 9 24 11 24 10 24 11 25 15 25 14 25 15 26 13 26 12 26 13 27 9 27 8 27 14 28 12 28 8 28 11 29 9 29 13 29 17 30 19 30 18 30 19 31 23 31 22 31 23 32 21 32 20 32 21 33 17 33 16 33 22 34 20 34 16 34 23 35 19 35 17 35</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="veladora_dorm2_b" name="veladora_dorm2_b" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#veladora_dorm2_b-mesh" name="veladora_dorm2_b">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="madera-material" target="#madera-material"/>
+              <instance_material symbol="madera_clara-material" target="#madera_clara-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

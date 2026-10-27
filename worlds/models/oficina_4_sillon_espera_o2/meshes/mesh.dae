@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:40:08</created>
+    <modified>2026-10-25T22:40:08</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="textil_taupe-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4793202 0.4072402 0.3515326 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="textil_claro-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.7681512 0.7011019 0.6104956 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="textil_terracota-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.5271151 0.1441285 0.05448028 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="textil_taupe-material" name="textil_taupe">
+      <instance_effect url="#textil_taupe-effect"/>
+    </material>
+    <material id="textil_claro-material" name="textil_claro">
+      <instance_effect url="#textil_claro-effect"/>
+    </material>
+    <material id="textil_terracota-material" name="textil_terracota">
+      <instance_effect url="#textil_terracota-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="sillon_espera_o2-mesh" name="sillon_espera_o2">
+      <mesh>
+        <source id="sillon_espera_o2-mesh-positions">
+          <float_array id="sillon_espera_o2-mesh-positions-array" count="144">-0.42 0.4750004 0 -0.42 0.4750004 0.4 0.46 0.4750004 0 0.46 0.4750004 0.4 -0.42 -0.4750004 0 -0.42 -0.4750004 0.4 0.46 -0.4750004 0 0.46 -0.4750004 0.4 -0.46 0.4750004 0.1999999 -0.46 0.4750004 0.84 -0.26 0.4750004 0.1999999 -0.26 0.4750004 0.84 -0.46 -0.4750004 0.1999999 -0.46 -0.4750004 0.84 -0.2600001 -0.4750004 0.1999999 -0.2600001 -0.4750004 0.84 -0.42 0.4749994 0 -0.42 0.4749994 0.66 0.46 0.4749994 0 0.46 0.4749994 0.66 -0.42 0.2550001 0 -0.42 0.2550001 0.66 0.46 0.2550001 0 0.46 0.2550001 0.66 -0.42 -0.2550001 0 -0.42 -0.2550001 0.66 0.46 -0.2550001 0 0.46 -0.2550001 0.66 -0.42 -0.4749994 0 -0.42 -0.4749994 0.66 0.46 -0.4749994 0 0.46 -0.4749994 0.66 -0.24 0.2150001 0.39 -0.24 0.2150001 0.53 0.36 0.2150001 0.39 0.36 0.2150001 0.53 -0.24 -0.2150001 0.39 -0.24 -0.2150001 0.53 0.36 -0.2150001 0.39 0.36 -0.2150001 0.53 -0.27 0.2049999 0.4 -0.27 0.2049999 0.8 -0.1299999 0.2049999 0.4 -0.1299999 0.2049999 0.8 -0.27 -0.2049999 0.4 -0.27 -0.2049999 0.8 -0.1299999 -0.2049999 0.4 -0.1299999 -0.2049999 0.8</float_array>
+          <technique_common>
+            <accessor source="#sillon_espera_o2-mesh-positions-array" count="48" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="sillon_espera_o2-mesh-normals">
+          <float_array id="sillon_espera_o2-mesh-normals-array" count="216">0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1 0 1 0 1 0 0 0 -1 0 -1 0 0 0 0 -1 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#sillon_espera_o2-mesh-normals-array" count="72" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="sillon_espera_o2-mesh-vertices">
+          <input semantic="POSITION" source="#sillon_espera_o2-mesh-positions"/>
+        </vertices>
+        <triangles material="textil_taupe-material" count="48">
+          <input semantic="VERTEX" source="#sillon_espera_o2-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#sillon_espera_o2-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 15 11 9 11 13 11 17 12 18 12 16 12 19 13 22 13 18 13 23 14 20 14 22 14 21 15 16 15 20 15 22 16 16 16 18 16 19 17 21 17 23 17 25 18 26 18 24 18 27 19 30 19 26 19 31 20 28 20 30 20 29 21 24 21 28 21 30 22 24 22 26 22 27 23 29 23 31 23 1 36 3 36 2 36 3 37 7 37 6 37 7 38 5 38 4 38 5 39 1 39 0 39 6 40 4 40 0 40 3 41 1 41 5 41 9 42 11 42 10 42 11 43 15 43 14 43 15 44 13 44 12 44 13 45 9 45 8 45 14 46 12 46 8 46 15 47 11 47 9 47 17 48 19 48 18 48 19 49 23 49 22 49 23 50 21 50 20 50 21 51 17 51 16 51 22 52 20 52 16 52 19 53 17 53 21 53 25 54 27 54 26 54 27 55 31 55 30 55 31 56 29 56 28 56 29 57 25 57 24 57 30 58 28 58 24 58 27 59 25 59 29 59</p>
+        </triangles>
+        <triangles material="textil_claro-material" count="12">
+          <input semantic="VERTEX" source="#sillon_espera_o2-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#sillon_espera_o2-mesh-normals" offset="1"/>
+          <p>33 24 34 24 32 24 35 25 38 25 34 25 39 26 36 26 38 26 37 27 32 27 36 27 38 28 32 28 34 28 35 29 37 29 39 29 33 60 35 60 34 60 35 61 39 61 38 61 39 62 37 62 36 62 37 63 33 63 32 63 38 64 36 64 32 64 35 65 33 65 37 65</p>
+        </triangles>
+        <triangles material="textil_terracota-material" count="12">
+          <input semantic="VERTEX" source="#sillon_espera_o2-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#sillon_espera_o2-mesh-normals" offset="1"/>
+          <p>41 30 42 30 40 30 43 31 46 31 42 31 47 32 44 32 46 32 45 33 40 33 44 33 46 34 40 34 42 34 43 35 45 35 47 35 41 66 43 66 42 66 43 67 47 67 46 67 47 68 45 68 44 68 45 69 41 69 40 69 46 70 44 70 40 70 43 71 41 71 45 71</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="sillon_espera_o2" name="sillon_espera_o2" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#sillon_espera_o2-mesh" name="sillon_espera_o2">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="textil_taupe-material" target="#textil_taupe-material"/>
+              <instance_material symbol="textil_claro-material" target="#textil_claro-material"/>
+              <instance_material symbol="textil_terracota-material" target="#textil_terracota-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

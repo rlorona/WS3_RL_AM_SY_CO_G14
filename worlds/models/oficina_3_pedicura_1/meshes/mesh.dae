@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 4.3.2 commit date:2024-12-16, commit time:21:10, hash:32f5fdce0a0a</authoring_tool>
+    </contributor>
+    <created>2026-10-25T22:40:05</created>
+    <modified>2026-10-25T22:40:05</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_effects>
+    <effect id="textil_taupe-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.4793202 0.4072402 0.3515326 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="sanitario-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.9301109 0.9301109 0.9130986 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="vidrio-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.6239604 0.7230551 0.7605245 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.5</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="textil_taupe-material" name="textil_taupe">
+      <instance_effect url="#textil_taupe-effect"/>
+    </material>
+    <material id="sanitario-material" name="sanitario">
+      <instance_effect url="#sanitario-effect"/>
+    </material>
+    <material id="vidrio-material" name="vidrio">
+      <instance_effect url="#vidrio-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="pedicura_1-mesh" name="pedicura_1">
+      <mesh>
+        <source id="pedicura_1-mesh-positions">
+          <float_array id="pedicura_1-mesh-positions-array" count="204">-0.3499999 -0.5499992 0 -0.3499999 -0.5499992 0.56 -0.3499999 0.25 0 -0.3499999 0.25 0.56 0.3499999 -0.5499992 0 0.3499999 -0.5499992 0.56 0.3499999 0.25 0 0.3499999 0.25 0.56 -0.3299999 -0.5699997 0.56 -0.3299999 -0.5699997 1.12 -0.3299999 -0.4099999 0.56 -0.3299999 -0.4099999 1.12 0.3299999 -0.5699997 0.56 0.3299999 -0.5699997 1.12 0.3299999 -0.4099999 0.56 0.3299999 -0.4099999 1.12 -0.3599999 -0.5 0.56 -0.3599999 -0.5 0.7600001 -0.3599999 0.2000007 0.56 -0.3599999 0.2000007 0.7600001 -0.26 -0.5 0.56 -0.26 -0.5 0.7600001 -0.26 0.2000007 0.56 -0.26 0.2000007 0.7600001 0.26 -0.5 0.56 0.26 -0.5 0.7600001 0.26 0.2000007 0.56 0.26 0.2000007 0.7600001 0.3599999 -0.5 0.56 0.3599999 -0.5 0.7600001 0.3599999 0.2000007 0.56 0.3599999 0.2000007 0.7600001 -0.28 0.21 0 -0.28 0.21 0.36 -0.28 0.5700007 0 -0.28 0.5700007 0.36 0.28 0.21 0 0.28 0.21 0.36 0.28 0.5700007 0 0.28 0.5700007 0.36 0 0.5500002 0.325 0 0.5500002 0.355 0.06942129 0.5341549 0.325 0.06942129 0.5341549 0.355 0.1250929 0.4897585 0.325 0.1250929 0.4897585 0.355 0.1559884 0.4256039 0.325 0.1559884 0.4256039 0.355 0.1559884 0.3543968 0.325 0.1559884 0.3543968 0.355 0.1250929 0.2902422 0.325 0.1250929 0.2902422 0.355 0.06942129 0.2458457 0.325 0.06942129 0.2458457 0.355 0 0.2300004 0.325 0 0.2300004 0.355 -0.06942129 0.2458457 0.325 -0.06942129 0.2458457 0.355 -0.1250929 0.2902422 0.325 -0.1250929 0.2902422 0.355 -0.1559884 0.3543968 0.325 -0.1559884 0.3543968 0.355 -0.1559884 0.4256039 0.325 -0.1559884 0.4256039 0.355 -0.1250929 0.4897585 0.325 -0.1250929 0.4897585 0.355 -0.06942129 0.5341549 0.325 -0.06942129 0.5341549 0.355</float_array>
+          <technique_common>
+            <accessor source="#pedicura_1-mesh-positions-array" count="68" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="pedicura_1-mesh-normals">
+          <float_array id="pedicura_1-mesh-normals-array" count="336">-1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 0.2225254 0.9749268 0 0.6234872 0.7818335 0 0.9009676 0.4338864 0 1 0 0 0.9009676 -0.4338864 0 0.6234872 -0.7818335 0 0.2225254 -0.9749268 0 -0.2225254 -0.9749268 0 -0.6234872 -0.7818335 0 -0.9009676 -0.4338864 0 -1 0 0 -0.9009676 0.4338864 0 0 0 1 -0.6234872 0.7818335 0 -0.2225254 0.9749268 0 0 0 -1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 -1 0 0 0 1 0 1 0 0 0 -1 0 0 0 -1 0 0 1 0.2225254 0.9749268 0 0.6234872 0.7818335 0 0.9009676 0.4338864 0 1 0 0 0.9009676 -0.4338864 0 0.6234872 -0.7818335 0 0.2225254 -0.9749268 0 -0.2225254 -0.9749268 0 -0.6234872 -0.7818335 0 -0.9009676 -0.4338864 0 -1 0 0 -0.9009676 0.4338864 0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 0 0 1 -0.6234872 0.7818335 0 -0.2225254 0.9749268 0 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1 0 0 -1</float_array>
+          <technique_common>
+            <accessor source="#pedicura_1-mesh-normals-array" count="112" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="pedicura_1-mesh-vertices">
+          <input semantic="POSITION" source="#pedicura_1-mesh-positions"/>
+        </vertices>
+        <triangles material="textil_taupe-material" count="48">
+          <input semantic="VERTEX" source="#pedicura_1-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#pedicura_1-mesh-normals" offset="1"/>
+          <p>1 0 2 0 0 0 3 1 6 1 2 1 7 2 4 2 6 2 5 3 0 3 4 3 6 4 0 4 2 4 3 5 5 5 7 5 9 6 10 6 8 6 11 7 14 7 10 7 15 8 12 8 14 8 13 9 8 9 12 9 14 10 8 10 10 10 11 11 13 11 15 11 17 12 18 12 16 12 19 13 22 13 18 13 23 14 20 14 22 14 21 15 16 15 20 15 22 16 16 16 18 16 19 17 21 17 23 17 25 18 26 18 24 18 27 19 30 19 26 19 31 20 28 20 30 20 29 21 24 21 28 21 30 22 24 22 26 22 27 23 29 23 31 23 1 46 3 46 2 46 3 47 7 47 6 47 7 48 5 48 4 48 5 49 1 49 0 49 6 50 4 50 0 50 3 51 1 51 5 51 9 52 11 52 10 52 11 53 15 53 14 53 15 54 13 54 12 54 13 55 9 55 8 55 14 56 12 56 8 56 11 57 9 57 13 57 17 58 19 58 18 58 19 59 23 59 22 59 23 60 21 60 20 60 21 61 17 61 16 61 22 62 20 62 16 62 19 63 17 63 21 63 25 64 27 64 26 64 27 65 31 65 30 65 31 66 29 66 28 66 29 67 25 67 24 67 30 68 28 68 24 68 27 69 25 69 29 69</p>
+        </triangles>
+        <triangles material="sanitario-material" count="12">
+          <input semantic="VERTEX" source="#pedicura_1-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#pedicura_1-mesh-normals" offset="1"/>
+          <p>33 24 34 24 32 24 35 25 38 25 34 25 39 26 36 26 38 26 37 27 32 27 36 27 38 28 32 28 34 28 35 29 37 29 39 29 33 70 35 70 34 70 35 71 39 71 38 71 39 72 37 72 36 72 37 73 33 73 32 73 38 74 36 74 32 74 35 75 33 75 37 75</p>
+        </triangles>
+        <triangles material="vidrio-material" count="52">
+          <input semantic="VERTEX" source="#pedicura_1-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#pedicura_1-mesh-normals" offset="1"/>
+          <p>41 30 42 30 40 30 43 31 44 31 42 31 45 32 46 32 44 32 47 33 48 33 46 33 49 34 50 34 48 34 51 35 52 35 50 35 53 36 54 36 52 36 55 37 56 37 54 37 57 38 58 38 56 38 59 39 60 39 58 39 61 40 62 40 60 40 63 41 64 41 62 41 45 42 65 42 57 42 65 43 66 43 64 43 67 44 40 44 66 44 66 45 46 45 54 45 41 76 43 76 42 76 43 77 45 77 44 77 45 78 47 78 46 78 47 79 49 79 48 79 49 80 51 80 50 80 51 81 53 81 52 81 53 82 55 82 54 82 55 83 57 83 56 83 57 84 59 84 58 84 59 85 61 85 60 85 61 86 63 86 62 86 63 87 65 87 64 87 45 88 43 88 41 88 41 89 67 89 45 89 67 90 65 90 45 90 65 91 63 91 61 91 61 92 59 92 65 92 59 93 57 93 65 93 57 94 55 94 53 94 53 95 51 95 49 95 49 96 47 96 45 96 57 97 53 97 49 97 49 98 45 98 57 98 65 99 67 99 66 99 67 100 41 100 40 100 66 101 40 101 42 101 42 102 44 102 46 102 46 103 48 103 50 103 50 104 52 104 46 104 52 105 54 105 46 105 54 106 56 106 62 106 56 107 58 107 62 107 58 108 60 108 62 108 62 109 64 109 66 109 66 110 42 110 46 110 62 111 66 111 54 111</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="pedicura_1" name="pedicura_1" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#pedicura_1-mesh" name="pedicura_1">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="textil_taupe-material" target="#textil_taupe-material"/>
+              <instance_material symbol="sanitario-material" target="#sanitario-material"/>
+              <instance_material symbol="vidrio-material" target="#vidrio-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<sdf version="1.10">
+  <world name="oficina_3_world">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-contact-system"
+            name="gz::sim::systems::Contact"/>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <plugin filename="gz-sim-imu-system"
+            name="gz::sim::systems::Imu"/>
+    <plugin filename="gz-sim-navsat-system"
+            name="gz::sim::systems::NavSat"/>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <world_frame_orientation>ENU</world_frame_orientation>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+
+
+    <scene>
+      <ambient>0.55 0.54 0.52 1</ambient>
+      <background>0.78 0.82 0.86 1</background>
+      <grid>false</grid>
+      <shadows>true</shadows>
+    </scene>
+
+    <light type="directional" name="sol">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 12 0 0 0</pose>
+      <diffuse>0.95 0.92 0.86 1</diffuse>
+      <specular>0.25 0.25 0.25 1</specular>
+      <attenuation>
+        <range>60</range><constant>0.9</constant>
+        <linear>0.01</linear><quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.45 0.35 -0.82</direction>
+    </light>
+
+    <model name="suelo">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry><plane><normal>0 0 1</normal><size>80 80</size></plane></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><plane><normal>0 0 1</normal><size>80 80</size></plane></geometry>
+          <material>
+            <ambient>0.42 0.45 0.38 1</ambient>
+            <diffuse>0.46 0.50 0.41 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <light type="point" name="luz_styling_sur">
+      <pose>2.60 2.00 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_acceso">
+      <pose>5.80 1.40 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_aseos">
+      <pose>8.20 1.10 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_disp_s">
+      <pose>12.00 2.80 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_disp_n">
+      <pose>12.00 4.80 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_styling_c">
+      <pose>2.40 5.80 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_pasillo">
+      <pose>7.20 6.60 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_lavado">
+      <pose>2.00 10.20 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_recepcion">
+      <pose>6.90 10.10 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_retail_s">
+      <pose>12.00 7.60 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_retail_n">
+      <pose>12.00 11.20 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_manicura_s">
+      <pose>2.60 14.00 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_manicura_n">
+      <pose>2.60 16.60 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_styling_n_o">
+      <pose>7.00 15.40 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_styling_n_e">
+      <pose>10.00 15.40 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <light type="point" name="luz_almacen">
+      <pose>13.00 15.40 2.55 0 0 0</pose>
+      <cast_shadows>false</cast_shadows>
+      <diffuse>0.55 0.52 0.47 1</diffuse>
+      <specular>0.08 0.08 0.08 1</specular>
+      <attenuation>
+        <range>7</range><constant>0.35</constant>
+        <linear>0.12</linear><quadratic>0.02</quadratic>
+      </attenuation>
+    </light>
+    <include>
+      <name>oficina_3_estructura</name>
+      <pose>0 0 0 0 0 0</pose>
+      <uri>model://oficina_3_estructura</uri>
+    </include>
+    <include>
+      <name>oficina_3_isla_ssur</name>
+      <pose>2.6000 2.1000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_isla_ssur</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_s0</name>
+      <pose>1.2000 1.4000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_s0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_n0</name>
+      <pose>1.2000 2.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_n0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_s1</name>
+      <pose>2.4000 1.4000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_s1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_n1</name>
+      <pose>2.4000 2.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_n1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_s2</name>
+      <pose>3.6000 1.4000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_s2</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_ssur_n2</name>
+      <pose>3.6000 2.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_ssur_n2</uri>
+    </include>
+    <include>
+      <name>oficina_3_isla_scen</name>
+      <pose>2.4000 5.9000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_isla_scen</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_s0</name>
+      <pose>1.2000 5.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_s0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_n0</name>
+      <pose>1.2000 6.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_n0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_s1</name>
+      <pose>2.4000 5.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_s1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_n1</name>
+      <pose>2.4000 6.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_n1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_s2</name>
+      <pose>3.4000 5.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_s2</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_scen_n2</name>
+      <pose>3.4000 6.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_scen_n2</uri>
+    </include>
+    <include>
+      <name>oficina_3_isla_snor</name>
+      <pose>8.3000 15.3000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_isla_snor</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_s0</name>
+      <pose>6.8000 14.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_s0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_n0</name>
+      <pose>6.8000 16.0000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_n0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_s1</name>
+      <pose>8.3000 14.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_s1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_n1</name>
+      <pose>8.3000 16.0000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_n1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_s2</name>
+      <pose>9.8000 14.6000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_s2</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_snor_n2</name>
+      <pose>9.8000 16.0000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_snor_n2</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavacabezas_0</name>
+      <pose>0.9200 8.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavacabezas_0</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavacabezas_1</name>
+      <pose>0.9200 9.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavacabezas_1</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavacabezas_2</name>
+      <pose>0.9200 10.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavacabezas_2</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavacabezas_3</name>
+      <pose>0.9200 11.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavacabezas_3</uri>
+    </include>
+    <include>
+      <name>oficina_3_mesa_manicura_0</name>
+      <pose>1.2000 16.9000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mesa_manicura_0</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_manicura_0</name>
+      <pose>1.2000 16.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_manicura_0</uri>
+    </include>
+    <include>
+      <name>oficina_3_mesa_manicura_1</name>
+      <pose>2.6000 16.9000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mesa_manicura_1</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_manicura_1</name>
+      <pose>2.6000 16.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_manicura_1</uri>
+    </include>
+    <include>
+      <name>oficina_3_mesa_manicura_2</name>
+      <pose>4.0000 16.9000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mesa_manicura_2</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_manicura_2</name>
+      <pose>4.0000 16.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_manicura_2</uri>
+    </include>
+    <include>
+      <name>oficina_3_pedicura_0</name>
+      <pose>1.3000 13.6500 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_pedicura_0</uri>
+    </include>
+    <include>
+      <name>oficina_3_pedicura_1</name>
+      <pose>3.0000 13.6500 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_pedicura_1</uri>
+    </include>
+    <include>
+      <name>oficina_3_planta_manicura</name>
+      <pose>4.7000 13.3000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_planta_manicura</uri>
+    </include>
+    <include>
+      <name>oficina_3_isla_recepcion</name>
+      <pose>6.9000 10.1450 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_isla_recepcion</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_recepcion</name>
+      <pose>6.9000 10.1000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_recepcion</uri>
+    </include>
+    <include>
+      <name>oficina_3_sillon_espera_o</name>
+      <pose>5.4000 8.2200 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_sillon_espera_o</uri>
+    </include>
+    <include>
+      <name>oficina_3_sillon_espera_e</name>
+      <pose>8.3000 8.2200 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_sillon_espera_e</uri>
+    </include>
+    <include>
+      <name>oficina_3_mesa_espera</name>
+      <pose>6.8500 8.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mesa_espera</uri>
+    </include>
+    <include>
+      <name>oficina_3_expositor_curvo_s</name>
+      <pose>9.9189 7.7340 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_expositor_curvo_s</uri>
+    </include>
+    <include>
+      <name>oficina_3_expositor_curvo_n</name>
+      <pose>9.9189 12.4660 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_expositor_curvo_n</uri>
+    </include>
+    <include>
+      <name>oficina_3_expositor_este</name>
+      <pose>13.9000 9.0000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_expositor_este</uri>
+    </include>
+    <include>
+      <name>oficina_3_sillon_retail_s</name>
+      <pose>11.9000 6.6200 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_sillon_retail_s</uri>
+    </include>
+    <include>
+      <name>oficina_3_sillon_retail_n</name>
+      <pose>11.9000 11.6800 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_sillon_retail_n</uri>
+    </include>
+    <include>
+      <name>oficina_3_planta_retail</name>
+      <pose>10.9000 12.2000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_planta_retail</uri>
+    </include>
+    <include>
+      <name>oficina_3_taquillas</name>
+      <pose>7.4000 3.7860 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_taquillas</uri>
+    </include>
+    <include>
+      <name>oficina_3_mueble_dispensary</name>
+      <pose>12.0000 5.1760 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mueble_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_fregadero_dispensary</name>
+      <pose>11.2000 5.1800 0.7900 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_fregadero_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_refrigerador_dispensary</name>
+      <pose>13.7775 4.1000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_refrigerador_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_estante_dispensary</name>
+      <pose>11.6000 1.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_estante_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_mesa_dispensary</name>
+      <pose>12.1000 3.0000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_mesa_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_silla_dispensary</name>
+      <pose>12.1000 3.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_silla_dispensary</uri>
+    </include>
+    <include>
+      <name>oficina_3_inodoro_aseo_a</name>
+      <pose>7.8625 0.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_inodoro_aseo_a</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavamanos_aseo_a</name>
+      <pose>7.0000 0.4975 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavamanos_aseo_a</uri>
+    </include>
+    <include>
+      <name>oficina_3_inodoro_aseo_b</name>
+      <pose>9.3125 0.8000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_inodoro_aseo_b</uri>
+    </include>
+    <include>
+      <name>oficina_3_lavamanos_aseo_b</name>
+      <pose>8.5500 0.4975 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_lavamanos_aseo_b</uri>
+    </include>
+    <include>
+      <name>oficina_3_estante_almacen_a</name>
+      <pose>13.0000 17.3000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_estante_almacen_a</uri>
+    </include>
+    <include>
+      <name>oficina_3_estante_almacen_b</name>
+      <pose>13.9000 14.7000 0.0000 0.0000 0.0000 0.0000</pose>
+      <uri>model://oficina_3_estante_almacen_b</uri>
+    </include>
+
+  </world>
+</sdf>
