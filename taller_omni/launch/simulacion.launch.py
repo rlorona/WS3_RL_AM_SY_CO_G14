@@ -1,6 +1,7 @@
-# Clearpath Dingo-O en uno de los mundos del workshop (config/mundos.yaml).
-#   ros2 launch mundos_workshop dingo.launch.py                    -> laboratorio CoRAL
-#   ros2 launch mundos_workshop dingo.launch.py mundo:=oficina_1   -> otro mundo
+# Clearpath Dingo-O, con el controlador de Clearpath, en uno de los mundos del paquete
+# worlds (lista y posicion inicial en config/mundos.yaml).
+#   ros2 launch taller_omni simulacion.launch.py                    -> mundo por defecto
+#   ros2 launch taller_omni simulacion.launch.py mundo:=oficina_1   -> otro mundo
 #
 # No usa clearpath_gz/simulation.launch.py porque solo acepta sus propios mundos.
 # Ademas separa servidor y GUI de Gazebo: la GUI se abre cuando el robot ya
@@ -21,9 +22,10 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 NAMESPACE = 'do100_0000'
-PKG = get_package_share_directory('mundos_workshop')
+PKG = get_package_share_directory('taller_omni')
+WORLDS = get_package_share_directory('worlds')
 # Clearpath genera aqui (fuera de src/) el URDF, parametros y launch del robot
-SETUP_PATH = os.path.expanduser('~/.ros/mundos_workshop/clearpath/')
+SETUP_PATH = os.path.expanduser('~/.ros/taller_omni/clearpath/')
 
 with open(os.path.join(PKG, 'config', 'mundos.yaml')) as f:
     MUNDOS = yaml.safe_load(f)
@@ -43,7 +45,7 @@ ARGUMENTS = [
 def lanzar(context):
     clave = LaunchConfiguration('mundo').perform(context)
     mundo = MUNDOS[clave]
-    sdf = os.path.join(PKG, 'worlds', f'{clave}.sdf')
+    sdf = os.path.join(WORLDS, 'worlds', f'{clave}.sdf')
     inicio = dict(zip(('x', 'y', 'yaw'), (str(v) for v in mundo['inicio'])))
     for eje in inicio:
         inicio[eje] = LaunchConfiguration(eje).perform(context) or inicio[eje]
@@ -62,7 +64,7 @@ def lanzar(context):
     packages_paths = [os.path.join(p, 'share') for p in os.getenv('AMENT_PREFIX_PATH').split(':')]
     resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
-        value=':'.join([os.path.join(PKG, 'models'),
+        value=':'.join([os.path.join(WORLDS, 'models'),
                         os.path.join(pkg_clearpath_gz, 'worlds'),
                         os.path.join(pkg_clearpath_gz, 'meshes')] + packages_paths))
 

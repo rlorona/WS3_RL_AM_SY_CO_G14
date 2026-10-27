@@ -1,7 +1,7 @@
 # Mundos disponibles para el workshop 03.
-#   ros2 launch mundos_workshop dingo.launch.py mundo:=<clave>
+#   ros2 launch taller_omni simulacion.launch.py mundo:=<clave>
 #
-# El mundo es worlds/<clave>.sdf y sus piezas estan en models/.
+# El mundo es worlds/worlds/<clave>.sdf (paquete worlds) y sus piezas estan en worlds/models/.
 #
 # world:  nombre del <world> dentro del SDF (Gazebo lo usa en sus topics y servicios)
 # inicio: posicion inicial del Dingo-O [x, y, yaw] en metros y radianes. Se eligio

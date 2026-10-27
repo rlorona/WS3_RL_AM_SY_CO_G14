@@ -1,5 +1,5 @@
 # Parte 2 del taller: mapeo con el controlador de Clearpath.
-# Requiere la simulacion abierta con:  ros2 launch mundos_workshop dingo.launch.py mundo:=<mundo>
+# Requiere la simulacion abierta con:  ros2 launch taller_omni simulacion.launch.py mundo:=<mundo>
 #   ros2 launch taller_omni mapeo.launch.py              -> SLAM + RViz con el mapa
 #   ros2 launch taller_omni mapeo.launch.py rviz:=false  -> solo SLAM
 #
@@ -16,8 +16,8 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 NAMESPACE = 'do100_0000'
-# Carpeta donde dingo.launch.py deja la configuracion generada del robot
-SETUP_PATH = os.path.expanduser('~/.ros/mundos_workshop/clearpath/')
+# Carpeta donde simulacion.launch.py deja la configuracion generada del robot
+SETUP_PATH = os.path.expanduser('~/.ros/taller_omni/clearpath/')
 
 
 def generate_launch_description():

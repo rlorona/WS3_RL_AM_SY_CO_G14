@@ -4,7 +4,7 @@
 #   ros2 launch taller_omni taller.launch.py                 -> arena de 6 x 6 m
 #   ros2 launch taller_omni taller.launch.py rviz:=true      -> ademas abre RViz
 # Para usar el controlador de Clearpath (cmd_vel, panel de Gazebo, mapeo):
-#   ros2 launch mundos_workshop dingo.launch.py
+#   ros2 launch taller_omni simulacion.launch.py
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -24,8 +24,8 @@ def generate_launch_description():
 
     simulador = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
-            get_package_share_directory('mundos_workshop'), 'launch', 'dingo.launch.py')),
-        # La posicion inicial de cada mundo esta en mundos_workshop/config/mundos.yaml
+            get_package_share_directory('taller_omni'), 'launch', 'simulacion.launch.py')),
+        # La posicion inicial de cada mundo esta en config/mundos.yaml
         launch_arguments=[('mundo', LaunchConfiguration('mundo')), ('rviz', 'false')])
 
     # Pose real, odometria y caminos de cada intento; guarda el grafico al terminar
@@ -59,7 +59,7 @@ def generate_launch_description():
         DeclareLaunchArgument('mundo', default_value='arena'),
         DeclareLaunchArgument('rviz', default_value='false', choices=['true', 'false']),
         # rviz va antes del simulador: el include fija rviz:=false para no abrir el
-        # RViz de mundos_workshop, y los includes no aislan sus argumentos
+        # RViz de simulacion.launch.py, y los includes no aislan sus argumentos
         rviz,
         simulador,
         graficar,
