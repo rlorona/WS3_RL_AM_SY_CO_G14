@@ -2,7 +2,7 @@ from glob import glob
 
 from setuptools import find_packages, setup
 
-package_name = 'taller_omni'
+package_name = 'omni_workshop'
 
 setup(
     name=package_name,
@@ -19,13 +19,13 @@ setup(
     zip_safe=True,
     maintainer='David Torres',
     maintainer_email='davidtorrest1097@gmail.com',
-    description='Taller: modelo cinematico y trayectorias del robot omnidireccional Dingo-O',
+    description='Workshop: kinematic model and trajectories of the Dingo-O omnidirectional robot',
     license='Apache-2.0',
-    # Nodos ya registrados: "ros2 run taller_omni <nombre>"
+    # Registered nodes: "ros2 run omni_workshop <name>"
     entry_points={
         'console_scripts': [
-            'self_controller = taller_omni.self_controller:main',
-            'graficar = taller_omni.graficar:main',
+            'self_controller = omni_workshop.self_controller:main',
+            'plotter = omni_workshop.plotter:main',
         ],
     },
 )

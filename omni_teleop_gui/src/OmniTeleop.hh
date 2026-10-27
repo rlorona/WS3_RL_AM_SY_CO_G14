@@ -6,8 +6,8 @@
 #include <gz/gui/Plugin.hh>
 #include <gz/transport/Node.hh>
 
-/// Panel de teleoperacion omnidireccional para la GUI de Gazebo.
-/// Publica gz.msgs.Twist (linear.x, linear.y, angular.z) en <topic>.
+/// Omnidirectional teleoperation panel for the Gazebo GUI.
+/// Publishes gz.msgs.Twist (linear.x, linear.y, angular.z) on <topic>.
 class OmniTeleop : public gz::gui::Plugin
 {
   Q_OBJECT
@@ -26,7 +26,7 @@ public:
   double MaxLinear() const;
   double MaxAngular() const;
 
-  /// Velocidades en m/s y rad/s en el marco del robot.
+  /// Velocities in m/s and rad/s in the robot frame.
   Q_INVOKABLE void Publish(double _vx, double _vy, double _wz);
 
 public slots:

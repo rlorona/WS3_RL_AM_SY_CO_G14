@@ -31,7 +31,7 @@ Visualization Manager:
       Enabled: false
       Value: false
     - Class: rviz_default_plugins/LaserScan
-      Name: Lidar delantero (lidar2d_0)
+      Name: Front lidar (lidar2d_0)
       Enabled: true
       Topic:
         Value: /do100_0000/sensors/lidar2d_0/scan
@@ -46,7 +46,7 @@ Visualization Manager:
       Decay Time: 0
       Value: true
     - Class: rviz_default_plugins/LaserScan
-      Name: Lidar trasero (lidar2d_1)
+      Name: Rear lidar (lidar2d_1)
       Enabled: true
       Topic:
         Value: /do100_0000/sensors/lidar2d_1/scan
@@ -61,10 +61,10 @@ Visualization Manager:
       Decay Time: 0
       Value: true
     - Class: rviz_default_plugins/Path
-      Name: Deseada
+      Name: Desired
       Enabled: true
       Topic:
-        Value: /taller/camino/deseado
+        Value: /workshop/path/desired
         Reliability Policy: Reliable
         Durability Policy: Volatile
         History Policy: Keep Last
@@ -75,10 +75,10 @@ Visualization Manager:
       Alpha: 1
       Value: true
     - Class: rviz_default_plugins/Path
-      Name: Real (Gazebo)
+      Name: Actual (Gazebo)
       Enabled: true
       Topic:
-        Value: /taller/camino/real
+        Value: /workshop/path/actual
         Reliability Policy: Reliable
         Durability Policy: Volatile
         History Policy: Keep Last
@@ -89,10 +89,10 @@ Visualization Manager:
       Alpha: 1
       Value: true
     - Class: rviz_default_plugins/Path
-      Name: Odometria (ruedas)
+      Name: Odometry (wheels)
       Enabled: true
       Topic:
-        Value: /taller/camino/odometria
+        Value: /workshop/path/odometry
         Reliability Policy: Reliable
         Durability Policy: Volatile
         History Policy: Keep Last

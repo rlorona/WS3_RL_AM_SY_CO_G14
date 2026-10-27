@@ -3,7 +3,7 @@
 <package format="3">
   <name>worlds</name>
   <version>0.1.0</version>
-  <description>Mundos de Gazebo Harmonic del workshop 03 (worlds/) y sus modelos (models/)</description>
+  <description>Gazebo Harmonic worlds of workshop 03 (worlds/) and their models (models/)</description>
   <maintainer email="davidtorrest1097@gmail.com">David Torres</maintainer>
   <license>Apache-2.0</license>
 

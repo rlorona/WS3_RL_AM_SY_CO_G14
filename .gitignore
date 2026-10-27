@@ -1,7 +1,7 @@
-# Paquetes de Clearpath: se descargan con  vcs import < dependencias.repos
+# Clearpath packages: downloaded with  vcs import < dependencies.repos
 clearpath_ws/
 
-# Solo se sube lo necesario para correr los mundos en Gazebo
+# Only what is needed to run the worlds in Gazebo is committed
 *.blend
 *.blend1
 .blender.log

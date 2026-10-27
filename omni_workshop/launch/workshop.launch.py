@@ -1,10 +1,10 @@
-# Simulador de la parte 1 del taller: Dingo-O con el controlador PROPIO.
-# Se quita el controlador mecanum de Clearpath y el robot recibe directamente la
-# velocidad de cada rueda (la calcula self_controller con el modelo cinematico).
-#   ros2 launch taller_omni taller.launch.py                 -> arena de 6 x 6 m
-#   ros2 launch taller_omni taller.launch.py rviz:=true      -> ademas abre RViz
-# Para usar el controlador de Clearpath (cmd_vel, panel de Gazebo, mapeo):
-#   ros2 launch taller_omni simulacion.launch.py
+# Simulation for part 1 of the workshop: Dingo-O with its OWN controller.
+# Clearpath's mecanum controller is removed and the robot receives the velocity of
+# each wheel directly (computed by self_controller with the kinematic model).
+#   ros2 launch omni_workshop workshop.launch.py                 -> 6 x 6 m arena
+#   ros2 launch omni_workshop workshop.launch.py rviz:=true      -> also opens RViz
+# To use Clearpath's controller (cmd_vel, Gazebo panel, mapping):
+#   ros2 launch omni_workshop simulation.launch.py
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -19,49 +19,48 @@ CM = '/do100_0000/controller_manager'
 
 
 def generate_launch_description():
-    params_ruedas = os.path.join(get_package_share_directory('taller_omni'),
-                                 'config', 'ruedas_controller.yaml')
+    pkg = get_package_share_directory('omni_workshop')
+    wheel_params = os.path.join(pkg, 'config', 'wheel_controller.yaml')
 
-    simulador = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(os.path.join(
-            get_package_share_directory('taller_omni'), 'launch', 'simulacion.launch.py')),
-        # La posicion inicial de cada mundo esta en config/mundos.yaml
-        launch_arguments=[('mundo', LaunchConfiguration('mundo')), ('rviz', 'false')])
+    simulation = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(os.path.join(pkg, 'launch', 'simulation.launch.py')),
+        # The start pose of each world is in config/worlds.yaml
+        launch_arguments=[('world', LaunchConfiguration('world')), ('rviz', 'false')])
 
-    # Pose real, odometria y caminos de cada intento; guarda el grafico al terminar
-    graficar = Node(package='taller_omni', executable='graficar', output='screen')
+    # Ground truth, odometry and paths of each run; saves the plot at the end
+    plotter = Node(package='omni_workshop', executable='plotter', output='screen')
 
-    # RViz con el robot y los tres caminos (deseado, real, odometria) en el marco world
+    # RViz with the robot and the three paths (desired, actual, odometry) in the world frame
     rviz = Node(
         package='rviz2', executable='rviz2', name='rviz2', output='screen',
-        arguments=['-d', os.path.join(get_package_share_directory('taller_omni'), 'rviz', 'taller.rviz')],
+        arguments=['-d', os.path.join(pkg, 'rviz', 'workshop.rviz')],
         parameters=[{'use_sim_time': True}],
         remappings=[('/tf', '/do100_0000/tf'), ('/tf_static', '/do100_0000/tf_static')],
         condition=IfCondition(LaunchConfiguration('rviz')))
 
-    # Cuando el controlador mecanum de Clearpath ya este activo, se reemplaza por
-    # uno que recibe la velocidad de cada rueda.
-    cambiar_controlador = ExecuteProcess(
+    # Once Clearpath's mecanum controller is active, it is replaced by one that
+    # receives the velocity of each wheel.
+    switch_controller = ExecuteProcess(
         cmd=['bash', '-c',
              f'until ros2 control list_controllers -c {CM} 2>/dev/null'
              ' | grep -q "platform_velocity_controller.*active"; do sleep 1; done; '
              f'ros2 run controller_manager spawner wheel_velocity_controller -c {CM}'
-             f' -p {params_ruedas} --inactive && '
+             f' -p {wheel_params} --inactive && '
              f'ros2 control switch_controllers -c {CM}'
              ' --deactivate platform_velocity_controller --activate wheel_velocity_controller'
-             # Comando inicial en cero: sin ninguno, Gazebo puede recibir NaN en las ruedas
+             # Initial zero command: without one, Gazebo may receive NaN on the wheels
              ' && ros2 topic pub --once /do100_0000/wheel_velocity_controller/commands'
              ' std_msgs/msg/Float64MultiArray "{data: [0.0, 0.0, 0.0, 0.0]}" > /dev/null'
-             ' && echo "Controlador por rueda activo: /do100_0000/wheel_velocity_controller/commands"'],
+             ' && echo "Wheel controller active: /do100_0000/wheel_velocity_controller/commands"'],
         output='screen')
 
     return LaunchDescription([
-        DeclareLaunchArgument('mundo', default_value='arena'),
+        DeclareLaunchArgument('world', default_value='arena'),
         DeclareLaunchArgument('rviz', default_value='false', choices=['true', 'false']),
-        # rviz va antes del simulador: el include fija rviz:=false para no abrir el
-        # RViz de simulacion.launch.py, y los includes no aislan sus argumentos
+        # rviz goes before the simulation: the include sets rviz:=false so it does not
+        # open the RViz of simulation.launch.py, and includes do not isolate arguments
         rviz,
-        simulador,
-        graficar,
-        cambiar_controlador,
+        simulation,
+        plotter,
+        switch_controller,
     ])

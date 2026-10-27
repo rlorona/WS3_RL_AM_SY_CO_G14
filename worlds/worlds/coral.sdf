@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!-- Laboratorio CoRAL, generado a partir del plano PL-002. -->
+<!-- CoRAL laboratory, generated from floor plan PL-002. -->
 <sdf version="1.9">
   <world name="coral">
     <physics type="ode">
@@ -32,7 +32,7 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
 
-    <light type="directional" name="sol">
+    <light type="directional" name="sun">
       <cast_shadows>false</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
@@ -40,7 +40,7 @@
       <direction>-0.3 0.2 -1</direction>
     </light>
 
-    <model name="piso">
+    <model name="floor">
       <static>true</static>
       <link name="link">
         <collision name="c"><geometry><plane><normal>0 0 1</normal><size>40 40</size></plane></geometry></collision>
@@ -51,7 +51,7 @@
       </link>
     </model>
 
-    <model name="piso_baldosas">
+    <model name="tile_floor">
       <static>true</static>
       <link name="link">
         <visual name="v">
@@ -68,7 +68,7 @@
       </link>
     </model>
 
-    <model name="laboratorio_coral">
+    <model name="coral_lab">
       <static>true</static>
       <link name="link">
       <collision name="muro_norte_c"><pose>0.0000 3.4500 1.2500 0 0 0</pose><geometry><box><size>15.6500 0.1500 2.5000</size></box></geometry></collision>

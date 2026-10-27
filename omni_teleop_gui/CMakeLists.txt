@@ -14,10 +14,10 @@ find_package(Qt5 REQUIRED COMPONENTS Core Quick)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTORCC ON)
-# moc explicito: AUTOMOC no detectaba el header .hh
+# Explicit moc: AUTOMOC did not detect the .hh header
 qt5_wrap_cpp(OMNI_TELEOP_MOC src/OmniTeleop.hh)
 
-# El nombre de la libreria (libOmniTeleop.so) es el "filename" del plugin en gui.config
+# The library name (libOmniTeleop.so) is the plugin "filename" in gui.config
 add_library(OmniTeleop SHARED
   src/OmniTeleop.cc
   src/OmniTeleop.qrc
@@ -34,7 +34,7 @@ target_link_libraries(OmniTeleop
 
 install(TARGETS OmniTeleop LIBRARY DESTINATION lib/${PROJECT_NAME})
 
-# Al hacer source del workspace, Gazebo encuentra el plugin
+# When the workspace is sourced, Gazebo finds the plugin
 ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/${PROJECT_NAME}.dsv.in")
 
 ament_package()

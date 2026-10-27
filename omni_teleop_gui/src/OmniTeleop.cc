@@ -12,7 +12,7 @@ OmniTeleop::OmniTeleop()
 void OmniTeleop::LoadConfig(const tinyxml2::XMLElement * _pluginElem)
 {
   if (this->title.empty()) {
-    this->title = "Teleop omnidireccional";
+    this->title = "Omnidirectional teleop";
   }
   if (!_pluginElem) {
     return;
@@ -49,7 +49,7 @@ void OmniTeleop::SetTopic(const QString & _topic)
   this->topic = _topic.toStdString();
   this->pub = this->node.Advertise<gz::msgs::Twist>(this->topic);
   if (!this->pub) {
-    gzerr << "No se pudo anunciar el topic [" << this->topic << "]" << std::endl;
+    gzerr << "Could not advertise topic [" << this->topic << "]" << std::endl;
   }
   emit this->TopicChanged();
 }

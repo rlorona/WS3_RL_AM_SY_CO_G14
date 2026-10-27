@@ -1,6 +1,6 @@
-# Robot del taller: Clearpath Dingo-O (do100) con dos lidars Hokuyo.
-# Es el mismo para todos. Clearpath genera el URDF, controladores y launch a
-# partir de este archivo en ~/.ros/taller_omni/clearpath/ al lanzar.
+# Workshop robot: Clearpath Dingo-O (do100) with two Hokuyo lidars.
+# It is the same for everyone. On launch, Clearpath generates the URDF, controllers
+# and launch files from this file in ~/.ros/omni_workshop/clearpath/.
 serial_number: do100-0000
 version: 0
 system:
@@ -15,11 +15,11 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        # mecanum_drive_controller 4.42.1 (Jazzy) tiene un error: cuando el comando
-        # expira (reference_timeout) solo pone en cero la rueda delantera izquierda y
-        # las otras tres siguen con su ultima velocidad. Con 0.1 s (valor de Clearpath)
-        # expira antes de que termine la rampa de frenado y el robot sigue avanzando.
-        # Con 1.0 s la rampa (maximo 0.5 s) termina antes. Corregido en la 4.43.0.
+        # mecanum_drive_controller 4.42.1 (Jazzy) has a bug: when the command expires
+        # (reference_timeout) it only zeroes the front-left wheel and the other three
+        # keep their last velocity. With 0.1 s (Clearpath's value) it expires before the
+        # braking ramp ends and the robot keeps moving. With 1.0 s the ramp (0.5 s at
+        # most) finishes first. Fixed in 4.43.0.
         reference_timeout: 1.0
 mounts:
   bracket:

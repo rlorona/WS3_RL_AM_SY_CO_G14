@@ -3,7 +3,7 @@
 <package format="3">
   <name>omni_teleop_gui</name>
   <version>0.1.0</version>
-  <description>Panel de la GUI de Gazebo para teleoperar robots omnidireccionales (vx, vy, giro)</description>
+  <description>Gazebo GUI panel to teleoperate omnidirectional robots (vx, vy, rotation)</description>
   <maintainer email="davidtorrest1097@gmail.com">David Torres</maintainer>
   <license>Apache-2.0</license>
 

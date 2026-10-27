@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.10">
-  <world name="casa_world">
+  <world name="house_world">
 
     <physics name="1ms" type="ignored">
       <max_step_size>0.001</max_step_size>
@@ -42,7 +42,7 @@
       <shadows>true</shadows>
     </scene>
 
-    <light type="directional" name="sol">
+    <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 12 0 0 0</pose>
       <diffuse>0.95 0.92 0.86 1</diffuse>
@@ -71,7 +71,7 @@
       </link>
     </model>
 
-    <light type="point" name="luz_dorm3">
+    <light type="point" name="light_dorm3">
       <pose>1.70 1.70 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -81,7 +81,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_dorm2">
+    <light type="point" name="light_dorm2">
       <pose>1.80 7.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -91,7 +91,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_dorm1">
+    <light type="point" name="light_dorm1">
       <pose>7.75 7.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -101,7 +101,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_master">
+    <light type="point" name="light_master">
       <pose>12.30 7.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -111,7 +111,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_banos">
+    <light type="point" name="light_banos">
       <pose>4.80 7.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -121,7 +121,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_cocina">
+    <light type="point" name="light_cocina">
       <pose>4.80 1.90 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -131,7 +131,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_comedor">
+    <light type="point" name="light_comedor">
       <pose>8.40 1.90 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -141,7 +141,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_sala">
+    <light type="point" name="light_sala">
       <pose>11.90 1.90 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -151,7 +151,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_pasillo_o">
+    <light type="point" name="light_pasillo_o">
       <pose>5.50 4.40 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -161,7 +161,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_pasillo_e">
+    <light type="point" name="light_pasillo_e">
       <pose>11.00 4.40 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -171,7 +171,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_anteroom">
+    <light type="point" name="light_anteroom">
       <pose>15.10 4.50 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>

@@ -1,13 +1,13 @@
-# Clearpath Dingo-O, con el controlador de Clearpath, en uno de los mundos del paquete
-# worlds (lista y posicion inicial en config/mundos.yaml).
-#   ros2 launch taller_omni simulacion.launch.py                    -> mundo por defecto
-#   ros2 launch taller_omni simulacion.launch.py mundo:=oficina_1   -> otro mundo
+# Clearpath Dingo-O, with the Clearpath controller, in one of the worlds of the
+# worlds package (list and start pose in config/worlds.yaml).
+#   ros2 launch omni_workshop simulation.launch.py                    -> default world
+#   ros2 launch omni_workshop simulation.launch.py world:=office_1    -> another world
 #
-# No usa clearpath_gz/simulation.launch.py porque solo acepta sus propios mundos.
-# Ademas separa servidor y GUI de Gazebo: la GUI se abre cuando el robot ya
-# existe. Si se abre antes (como en el launch de Clearpath), nunca recibe el
-# componente SensorTopic de los lidars y el panel "Visualize Lidar" no encuentra
-# el sensor, por lo que dibuja los rayos fijos en el origen del mundo.
+# It does not use clearpath_gz/simulation.launch.py because that one only accepts
+# Clearpath's own worlds. It also splits the Gazebo server and GUI: the GUI opens once
+# the robot exists. If it opens earlier (as in Clearpath's launch), it never receives
+# the lidars' SensorTopic component and the "Visualize Lidar" panel cannot find the
+# sensor, so it draws the rays fixed at the world origin.
 import os
 import shutil
 
@@ -22,19 +22,19 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 NAMESPACE = 'do100_0000'
-PKG = get_package_share_directory('taller_omni')
+PKG = get_package_share_directory('omni_workshop')
 WORLDS = get_package_share_directory('worlds')
-# Clearpath genera aqui (fuera de src/) el URDF, parametros y launch del robot
-SETUP_PATH = os.path.expanduser('~/.ros/taller_omni/clearpath/')
+# Clearpath generates the robot URDF, parameters and launch files here (outside src/)
+SETUP_PATH = os.path.expanduser('~/.ros/omni_workshop/clearpath/')
 
-with open(os.path.join(PKG, 'config', 'mundos.yaml')) as f:
-    MUNDOS = yaml.safe_load(f)
+with open(os.path.join(PKG, 'config', 'worlds.yaml')) as f:
+    WORLD_LIST = yaml.safe_load(f)
 
 ARGUMENTS = [
-    DeclareLaunchArgument('mundo', default_value='oficina_3', choices=list(MUNDOS),
-                          description='Mundo de config/mundos.yaml'),
+    DeclareLaunchArgument('world', default_value='office_3', choices=list(WORLD_LIST),
+                          description='World from config/worlds.yaml'),
     DeclareLaunchArgument('rviz', default_value='false', choices=['true', 'false']),
-    # Vacios: se usa el inicio del mundo en config/mundos.yaml
+    # Empty: use the world's start pose from config/worlds.yaml
     DeclareLaunchArgument('x', default_value=''),
     DeclareLaunchArgument('y', default_value=''),
     DeclareLaunchArgument('z', default_value='0.3'),
@@ -42,16 +42,16 @@ ARGUMENTS = [
 ]
 
 
-def lanzar(context):
-    clave = LaunchConfiguration('mundo').perform(context)
-    mundo = MUNDOS[clave]
-    sdf = os.path.join(WORLDS, 'worlds', f'{clave}.sdf')
-    inicio = dict(zip(('x', 'y', 'yaw'), (str(v) for v in mundo['inicio'])))
-    for eje in inicio:
-        inicio[eje] = LaunchConfiguration(eje).perform(context) or inicio[eje]
+def launch_world(context):
+    key = LaunchConfiguration('world').perform(context)
+    world = WORLD_LIST[key]
+    sdf = os.path.join(WORLDS, 'worlds', f'{key}.sdf')
+    start = dict(zip(('x', 'y', 'yaw'), (str(v) for v in world['start'])))
+    for axis in start:
+        start[axis] = LaunchConfiguration(axis).perform(context) or start[axis]
 
-    # El robot es el de config/dingo_o.yaml (igual para todos): se copia como
-    # robot.yaml a la carpeta de trabajo de Clearpath.
+    # The robot is the one in config/dingo_o.yaml (the same for everyone): it is
+    # copied as robot.yaml into Clearpath's working folder.
     os.makedirs(SETUP_PATH, exist_ok=True)
     shutil.copy(os.path.join(PKG, 'config', 'dingo_o.yaml'), os.path.join(SETUP_PATH, 'robot.yaml'))
 
@@ -59,8 +59,8 @@ def lanzar(context):
     gz_sim_launch = os.path.join(get_package_share_directory('ros_gz_sim'),
                                  'launch', 'gz_sim.launch.py')
 
-    # Igual que clearpath_gz/gz_sim.launch.py (mundos, mallas y todos los share/),
-    # mas los modelos de los mundos del workshop.
+    # Same as clearpath_gz/gz_sim.launch.py (worlds, meshes and every share/),
+    # plus the models of the workshop worlds.
     packages_paths = [os.path.join(p, 'share') for p in os.getenv('AMENT_PREFIX_PATH').split(':')]
     resource_path = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
@@ -72,8 +72,8 @@ def lanzar(context):
         PythonLaunchDescriptionSource(gz_sim_launch),
         launch_arguments=[('gz_args', f'{sdf} -s -r -v 4')])
 
-    # Espera a que el robot publique sus lidars y entonces abre la GUI.
-    # Cerrar la ventana de Gazebo termina toda la simulacion.
+    # Waits for the robot to publish its lidars and then opens the GUI.
+    # Closing the Gazebo window ends the whole simulation.
     wait_robot = ExecuteProcess(
         cmd=['bash', '-c', f'until gz topic -l | grep -q "/{NAMESPACE}/sensors/lidar2d_1/scan"; '
                            'do sleep 1; done'])
@@ -85,9 +85,9 @@ def lanzar(context):
     gui_after_robot = RegisterEventHandler(
         OnProcessExit(target_action=wait_robot, on_exit=[gz_gui]))
 
-    # El servidor corre como 'sh -c ruby gz sim ...' y la senal de cierre no
-    # siempre llega al proceso real: sin esto queda un servidor huerfano que
-    # choca con el siguiente lanzamiento.
+    # The server runs as 'sh -c ruby gz sim ...' and the shutdown signal does not
+    # always reach the real process: without this an orphan server remains and
+    # collides with the next launch.
     kill_server = RegisterEventHandler(OnShutdown(on_shutdown=[ExecuteProcess(
         cmd=['pkill', '-f', f'gz sim {sdf} -s'])]))
 
@@ -95,20 +95,20 @@ def lanzar(context):
         PythonLaunchDescriptionSource(os.path.join(pkg_clearpath_gz, 'launch',
                                                    'robot_spawn.launch.py')),
         launch_arguments=[('use_sim_time', 'true'),
-                          ('world', mundo['world']),
+                          ('world', world['gz_world']),
                           ('setup_path', SETUP_PATH),
                           ('rviz', 'false'),
-                          ('x', inicio['x']),
-                          ('y', inicio['y']),
+                          ('x', start['x']),
+                          ('y', start['y']),
                           ('z', LaunchConfiguration('z')),
-                          ('yaw', inicio['yaw'])])
+                          ('yaw', start['yaw'])])
 
     return [resource_path, gz_server, robot_spawn, wait_robot, gui_after_robot, kill_server]
 
 
-# RViz propio: robot + los dos lidars. El TF del robot va en /do100_0000/tf.
-# Se evalua antes de los includes: robot_spawn recibe rviz:=false y, como los
-# includes no aislan sus argumentos, despues 'rviz' ya valdria false aqui.
+# Own RViz: robot + both lidars. The robot TF is on /do100_0000/tf.
+# Evaluated before the includes: robot_spawn receives rviz:=false and, since
+# includes do not isolate their arguments, 'rviz' would be false here afterwards.
 def rviz_node(context):
     if LaunchConfiguration('rviz').perform(context) != 'true':
         return []
@@ -127,5 +127,5 @@ def generate_launch_description():
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(OpaqueFunction(function=rviz_node))
     ld.add_action(clock_bridge)
-    ld.add_action(OpaqueFunction(function=lanzar))
+    ld.add_action(OpaqueFunction(function=launch_world))
     return ld

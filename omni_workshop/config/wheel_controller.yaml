@@ -1,5 +1,5 @@
-# Controlador propio de la parte 1 del taller: recibe directamente la velocidad
-# angular de cada rueda (rad/s) en lugar de (vx, vy, w).
+# Own controller for part 1 of the workshop: receives the angular velocity of
+# each wheel (rad/s) directly instead of (vx, vy, w).
 /**/wheel_velocity_controller:
   ros__parameters:
     type: forward_command_controller/ForwardCommandController

@@ -1,10 +1,10 @@
-# Parte 2 del taller: mapeo con el controlador de Clearpath.
-# Requiere la simulacion abierta con:  ros2 launch taller_omni simulacion.launch.py mundo:=<mundo>
-#   ros2 launch taller_omni mapeo.launch.py              -> SLAM + RViz con el mapa
-#   ros2 launch taller_omni mapeo.launch.py rviz:=false  -> solo SLAM
+# Part 2 of the workshop: mapping with Clearpath's controller.
+# Requires the simulation to be running:  ros2 launch omni_workshop simulation.launch.py world:=<world>
+#   ros2 launch omni_workshop mapping.launch.py              -> SLAM + RViz with the map
+#   ros2 launch omni_workshop mapping.launch.py rviz:=false  -> SLAM only
 #
-# El TF del robot va en /do100_0000/tf (y el SLAM publica ahi map -> odom), por eso
-# RViz se lanza con esos remapeos.
+# The robot TF is on /do100_0000/tf (and SLAM publishes map -> odom there), so
+# RViz is launched with those remappings.
 import os
 
 from ament_index_python.packages import get_package_share_directory
@@ -16,14 +16,14 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 NAMESPACE = 'do100_0000'
-# Carpeta donde simulacion.launch.py deja la configuracion generada del robot
-SETUP_PATH = os.path.expanduser('~/.ros/taller_omni/clearpath/')
+# Folder where simulation.launch.py leaves the generated robot configuration
+SETUP_PATH = os.path.expanduser('~/.ros/omni_workshop/clearpath/')
 
 
 def generate_launch_description():
     rviz = Node(
         package='rviz2', executable='rviz2', name='rviz2', output='screen',
-        arguments=['-d', os.path.join(get_package_share_directory('taller_omni'), 'rviz', 'mapeo.rviz')],
+        arguments=['-d', os.path.join(get_package_share_directory('omni_workshop'), 'rviz', 'mapping.rviz')],
         parameters=[{'use_sim_time': True}],
         remappings=[('/tf', f'/{NAMESPACE}/tf'), ('/tf_static', f'/{NAMESPACE}/tf_static')],
         condition=IfCondition(LaunchConfiguration('rviz')))
@@ -35,7 +35,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('rviz', default_value='true', choices=['true', 'false']),
-        # rviz va antes del include, que podria redefinir el argumento 'rviz'
+        # rviz goes before the include, which could redefine the 'rviz' argument
         rviz,
         slam,
     ])

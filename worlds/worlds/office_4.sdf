@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.10">
-  <world name="oficina_4_world">
+  <world name="office_4_world">
 
     <physics name="1ms" type="ignored">
       <max_step_size>0.001</max_step_size>
@@ -42,7 +42,7 @@
       <shadows>true</shadows>
     </scene>
 
-    <light type="directional" name="sol">
+    <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 12 0 0 0</pose>
       <diffuse>0.95 0.92 0.86 1</diffuse>
@@ -71,7 +71,7 @@
       </link>
     </model>
 
-    <light type="point" name="luz_waiting_n">
+    <light type="point" name="light_waiting_n">
       <pose>2.80 15.50 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -81,7 +81,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_waiting_s">
+    <light type="point" name="light_waiting_s">
       <pose>2.80 10.50 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -91,7 +91,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_kids">
+    <light type="point" name="light_kids">
       <pose>2.60 4.40 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -101,7 +101,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_consultation">
+    <light type="point" name="light_consultation">
       <pose>3.20 1.80 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -111,7 +111,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_business">
+    <light type="point" name="light_business">
       <pose>9.20 11.80 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -121,7 +121,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_quiet">
+    <light type="point" name="light_quiet">
       <pose>9.30 5.70 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -131,7 +131,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_ortho_o">
+    <light type="point" name="light_ortho_o">
       <pose>13.00 6.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -141,7 +141,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_ortho_c">
+    <light type="point" name="light_ortho_c">
       <pose>16.80 5.40 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -151,7 +151,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_ortho_e">
+    <light type="point" name="light_ortho_e">
       <pose>20.60 6.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -161,7 +161,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_bench">
+    <light type="point" name="light_bench">
       <pose>16.80 2.20 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -171,7 +171,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_ster">
+    <light type="point" name="light_ster">
       <pose>17.30 9.60 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -181,7 +181,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_imaging">
+    <light type="point" name="light_imaging">
       <pose>16.35 13.60 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -191,7 +191,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_circ_centro">
+    <light type="point" name="light_circ_centro">
       <pose>13.50 13.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -201,7 +201,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_circ_este">
+    <light type="point" name="light_circ_este">
       <pose>23.00 12.60 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -211,7 +211,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_hc_rest">
+    <light type="point" name="light_hc_rest">
       <pose>16.75 16.20 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -221,7 +221,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_supply">
+    <light type="point" name="light_supply">
       <pose>23.40 16.20 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -231,7 +231,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_corr_n">
+    <light type="point" name="light_corr_n">
       <pose>27.00 15.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -241,7 +241,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_corr_s">
+    <light type="point" name="light_corr_s">
       <pose>27.00 8.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -251,7 +251,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_lounge_n">
+    <light type="point" name="light_lounge_n">
       <pose>29.70 7.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -261,7 +261,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_lounge_s">
+    <light type="point" name="light_lounge_s">
       <pose>29.70 3.00 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>
@@ -271,7 +271,7 @@
         <linear>0.12</linear><quadratic>0.02</quadratic>
       </attenuation>
     </light>
-    <light type="point" name="luz_priv">
+    <light type="point" name="light_priv">
       <pose>25.40 2.20 2.55 0 0 0</pose>
       <cast_shadows>false</cast_shadows>
       <diffuse>0.55 0.52 0.47 1</diffuse>

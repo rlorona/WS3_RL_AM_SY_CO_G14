@@ -1,184 +1,184 @@
-# Workshop 03 — Robot omnidireccional
+# Workshop 03 — Omnidirectional robot
 
-**Probado en:** Ubuntu 24.04 · ROS 2 Jazzy · Gazebo Harmonic (gz-sim 8)
+**Tested on:** Ubuntu 24.04 · ROS 2 Jazzy · Gazebo Harmonic (gz-sim 8)
 
-Taller con el Clearpath Dingo-O (4 ruedas mecanum) en Gazebo, en dos partes:
+Workshop with the Clearpath Dingo-O (4 mecanum wheels) in Gazebo, in two parts:
 
-1. **Figura con el modelo omnidireccional:** armas una figura y la recorres con tu propio controlador, calculando la velocidad de cada rueda.
-2. **Mapeo:** con el controlador de Clearpath mueves el robot desde la GUI de Gazebo, construyes el mapa de un mundo y lo guardas.
+1. **Figure with the omnidirectional model:** you build a figure and follow it with your own controller, computing the velocity of each wheel.
+2. **Mapping:** with Clearpath's controller you drive the robot from the Gazebo GUI, build the map of a world and save it.
 
-| Parte | Controlador del robot | Launch |
+| Part | Robot controller | Launch |
 |---|---|---|
-| 1 | **propio**: el de Clearpath se quita y las ruedas reciben tus velocidades | `ros2 launch taller_omni taller.launch.py` |
-| 2 | **Clearpath**: recibe $(v_x, v_y, \omega)$ por `cmd_vel` y calcula él las ruedas | `ros2 launch taller_omni simulacion.launch.py` |
+| 1 | **own**: Clearpath's controller is removed and the wheels receive your velocities | `ros2 launch omni_workshop workshop.launch.py` |
+| 2 | **Clearpath**: receives $(v_x, v_y, \omega)$ on `cmd_vel` and computes the wheels itself | `ros2 launch omni_workshop simulation.launch.py` |
 
-## Antes de empezar
+## Before you start
 
-Instala y compila todo siguiendo [`REQUERIMIENTOS.md`](REQUERIMIENTOS.md): Ubuntu 24.04 y ROS 2 Jazzy, los repositorios de Clearpath (no vienen en este repositorio), Nav2 y slam_toolbox, y la compilación del workspace.
+Install and build everything following [`REQUIREMENTS.md`](REQUIREMENTS.md): Ubuntu 24.04 and ROS 2 Jazzy, the Clearpath repositories (not included in this repository), Nav2 and slam_toolbox, and the workspace build.
 
-| Carpeta de `src/` | Qué es |
+| Folder in `src/` | What it is |
 |---|---|
-| `taller_omni/` | el taller: `self_controller.py`, `trajectory.py` y `graficar.py`, los launch (`simulacion`, `taller`, `mapeo`), la configuración del robot y de los mundos (`config/`) y RViz |
-| `worlds/` | mundos de Gazebo: `worlds/` (los `.sdf`) y `models/` (sus piezas) |
-| `omni_teleop_gui/` | panel de teleoperación de la GUI de Gazebo |
-| `dependencias.repos` | versiones de los repositorios de Clearpath que se descargan |
+| `omni_workshop/` | the workshop: `self_controller.py`, `trajectory.py` and `plotter.py`, the launch files (`simulation`, `workshop`, `mapping`), the robot and world configuration (`config/`) and RViz |
+| `worlds/` | Gazebo worlds: `worlds/` (the `.sdf` files) and `models/` (their pieces) |
+| `omni_teleop_gui/` | teleoperation panel for the Gazebo GUI |
+| `dependencies.repos` | versions of the Clearpath repositories to download |
 
-En cada terminal, primero:
+In every terminal, first:
 
 ```bash
 cd ~/workshop_03 && source install/setup.bash
 ```
 
-## 1. Figura con el modelo omnidireccional
+## 1. Figure with the omnidirectional model
 
-### Modelo matemático
+### Mathematical model
 
-En el **marco del robot**, $x$ apunta hacia adelante, $y$ hacia la izquierda y $\omega$ es positivo en sentido antihorario.
+In the **robot frame**, $x$ points forward, $y$ to the left and $\omega$ is positive counterclockwise.
 
-| Parámetro | Símbolo | Valor |
+| Parameter | Symbol | Value |
 |---|---|---|
-| Radio de rueda | $r$ | 0.05 m |
-| Distancia del centro al eje de ruedas (adelante/atrás) | $l_x$ | 0.285 m |
-| Distancia del centro al centro de rueda (lateral) | $l_y$ | 0.1854 m |
+| Wheel radius | $r$ | 0.05 m |
+| Distance from the center to the wheel axle (front/back) | $l_x$ | 0.285 m |
+| Distance from the center to the wheel center (sideways) | $l_y$ | 0.1854 m |
 
-**Del mundo al robot.** La trayectoria se da en el marco del mundo $(\dot x, \dot y, \dot\theta)$, pero el robot se mueve en su propio marco. Si está girado un ángulo $\theta$:
+**From the world to the robot.** The trajectory is given in the world frame $(\dot x, \dot y, \dot\theta)$, but the robot moves in its own frame. If it is rotated by an angle $\theta$:
 
 $$\begin{bmatrix}v_x\\ v_y\end{bmatrix} = \begin{bmatrix}\cos\theta & \sin\theta\\ -\sin\theta & \cos\theta\end{bmatrix}\begin{bmatrix}\dot x\\ \dot y\end{bmatrix}, \qquad \omega = \dot\theta$$
 
-**Cinemática inversa de las ruedas mecanum.** Cada rueda tiene rodillos a 45°, por eso combinando las cuatro se logra cualquier movimiento en el plano:
+**Inverse kinematics of the mecanum wheels.** Each wheel has rollers at 45°, so combining the four any motion in the plane is possible:
 
 $$\begin{bmatrix}\omega_{fl}\\ \omega_{fr}\\ \omega_{rl}\\ \omega_{rr}\end{bmatrix} = \frac{1}{r}\begin{bmatrix}1 & -1 & -(l_x+l_y)\\ 1 & 1 & (l_x+l_y)\\ 1 & 1 & -(l_x+l_y)\\ 1 & -1 & (l_x+l_y)\end{bmatrix}\begin{bmatrix}v_x\\ v_y\\ \omega\end{bmatrix}$$
 
-- **$v_x$** (avanzar): las 4 ruedas giran igual.
-- **$v_y$** (lateral izquierda): las ruedas de cada diagonal giran igual y las dos diagonales en sentido contrario.
-- **$\omega$** (girar): las ruedas izquierdas hacia atrás y las derechas hacia adelante, con brazo de palanca $l_x + l_y$.
+- **$v_x$** (forward): the 4 wheels spin the same.
+- **$v_y$** (sideways to the left): the wheels on each diagonal spin the same and the two diagonals spin in opposite directions.
+- **$\omega$** (rotate): the left wheels spin backwards and the right ones forwards, with lever arm $l_x + l_y$.
 
 <p align="center">
-  <img src="taller_omni/img/movimientos_mecanum.png" alt="Sentido de giro de cada rueda para los movimientos básicos del Dingo-O" width="600">
+  <img src="omni_workshop/img/mecanum_movements.png" alt="Spin direction of each wheel for the basic Dingo-O motions" width="600">
 </p>
 
-Vista desde arriba con el frente del robot hacia arriba ($x$ adelante, $y$ a la izquierda). Las flechas rojas son el sentido de giro de cada rueda, y son más largas cuanto más rápido gira la rueda. Las ruedas grises están detenidas, y la flecha naranja es el movimiento del robot. Cada caso sale de la matriz de arriba con las velocidades indicadas.
+Top view with the front of the robot facing up ($x$ forward, $y$ to the left). The red arrows are the spin direction of each wheel, and they are longer the faster the wheel spins. Gray wheels are stopped, and the orange arrow is the motion of the robot. Each case comes from the matrix above with the velocities shown.
 
-Ejemplo: avanzar a 0.2 m/s da $\omega = 0.2 / 0.05 = 4$ rad/s en las cuatro ruedas.
+Example: moving forward at 0.2 m/s gives $\omega = 0.2 / 0.05 = 4$ rad/s on all four wheels.
 
-### Archivos
+### Files
 
-| Archivo | Qué haces |
+| File | What you do |
 |---|---|
-| `taller_omni/taller_omni/self_controller.py` | completas `mundo_a_robot()` y `cinematica_inversa()` con las ecuaciones de arriba |
-| `taller_omni/taller_omni/trajectory.py` | armas tu figura con rectas, diagonales, arcos y giros, y la agregas a `FIGURAS` |
+| `omni_workshop/omni_workshop/self_controller.py` | complete `world_to_robot()` and `inverse_kinematics()` with the equations above |
+| `omni_workshop/omni_workshop/trajectory.py` | build your figure with lines, diagonals, arcs and turns, and add it to `FIGURES` |
 
-### Tu propia figura
+### Your own figure
 
-1. Abre `taller_omni/taller_omni/trajectory.py` y busca el diccionario `FIGURAS`, al final del archivo.
-2. Agrega una entrada: el **nombre** entre comillas y, después de `lambda:`, la cadena de movimientos. Los movimientos se miden desde donde arranca el robot ($x$ hacia su frente, $y$ hacia su izquierda; metros y grados):
+1. Open `omni_workshop/omni_workshop/trajectory.py` and find the `FIGURES` dictionary at the end of the file.
+2. Add an entry: the **name** in quotes and, after `lambda:`, the chain of moves. Moves are measured from where the robot starts ($x$ towards its front, $y$ towards its left; meters and degrees):
 
    ```python
-   FIGURAS = {
-       'cuadrado': ...,                                  # las que ya estaban
-       'mi_figura': lambda: (Trayectoria()
-                             .recta(1.0, 0.0)              # 1 m hacia adelante
-                             .diagonal(0.8, 135)           # 0.8 m hacia atrás a la izquierda
-                             .arco(0.5, 180)               # media vuelta a la izquierda, radio 0.5 m
-                             .giro(90)                     # gira 90° sobre sí mismo
-                             .recta(0.0, -1.0, girar=90)), # va de lado mientras gira
+   FIGURES = {
+       'square': ...,                                    # the existing ones
+       'my_figure': lambda: (Trajectory()
+                             .line(1.0, 0.0)               # 1 m forward
+                             .diagonal(0.8, 135)           # 0.8 m backwards to the left
+                             .arc(0.5, 180)                # half turn to the left, 0.5 m radius
+                             .turn(90)                     # rotate 90° in place
+                             .line(0.0, -1.0, rotate=90)), # move sideways while rotating
    }
    ```
 
-3. Guarda el archivo y llama a tu figura por su nombre con `-p figura:=mi_figura` (ver abajo). No hace falta recompilar.
+3. Save the file and call your figure by its name with `-p figure:=my_figure` (see below). No rebuild needed.
 
-| Movimiento | Qué hace |
+| Move | What it does |
 |---|---|
-| `recta(dx, dy)` | avanza en línea recta `dx` metros en $x$ y `dy` en $y$ |
-| `diagonal(distancia, angulo)` | recta en la dirección `angulo` (0 = adelante, 90 = izquierda, 45 = adelante-izquierda) |
-| `arco(radio, angulo)` | curva de `angulo` grados (positivo a la izquierda, negativo a la derecha) |
-| `giro(angulo)` | gira sobre sí mismo sin moverse |
-| `pausa(segundos)` | se queda quieto |
+| `line(dx, dy)` | moves in a straight line `dx` meters in $x$ and `dy` in $y$ |
+| `diagonal(distance, angle)` | straight line in the direction `angle` (0 = forward, 90 = left, 45 = forward-left) |
+| `arc(radius, angle)` | curve of `angle` degrees (positive to the left, negative to the right) |
+| `turn(angle)` | rotates in place without moving |
+| `pause(seconds)` | stays still |
 
-`recta`, `diagonal` y `arco` aceptan `v=` (velocidad en m/s, 0.2 por defecto) y `girar=` (grados que rota el robot mientras avanza).
+`line`, `diagonal` and `arc` accept `v=` (speed in m/s, 0.2 by default) and `rotate=` (degrees the robot turns while moving).
 
-Ya vienen de ejemplo `cuadrado`, `cuadrado_2m`, `cuadrado_girando`, `rombo`, `circulo`, `ocho` y `demo`. La arena mide 6 × 6 m y el robot arranca en (0, −1,5) mirando hacia +x: tiene 4,5 m libres hacia su izquierda y 3 m hacia adelante y hacia atrás. Deja 0,5 m entre el centro del robot y las paredes.
+The examples `square`, `square_2m`, `square_rotating`, `rhombus`, `circle`, `figure_eight` and `demo` are included. The arena is 6 × 6 m and the robot starts at (0, −1.5) facing +x: it has 4.5 m free to its left and 3 m forwards and backwards. Keep 0.5 m between the center of the robot and the walls.
 
-### En el simulador
+### In the simulator
 
 ```bash
-# Terminal 1: arena con el controlador propio (espera "Controlador por rueda activo")
-ros2 launch taller_omni taller.launch.py rviz:=true
+# Terminal 1: arena with the own controller (wait for "Wheel controller active")
+ros2 launch omni_workshop workshop.launch.py rviz:=true
 
-# Terminal 2: tu controlador recorre la figura indicada por su nombre en FIGURAS
-ros2 run taller_omni self_controller --ros-args -p figura:=cuadrado
-ros2 run taller_omni self_controller --ros-args -p figura:=mi_figura
+# Terminal 2: your controller follows the figure given by its name in FIGURES
+ros2 run omni_workshop self_controller --ros-args -p figure:=square
+ros2 run omni_workshop self_controller --ros-args -p figure:=my_figure
 ```
 
-Sin `-p figura:=...` recorre el `cuadrado`. Si el nombre no existe, el nodo muestra la lista de figuras disponibles. Cada vez que lo ejecutas, el robot recorre la figura una vez desde donde esté; para volver al inicio, relanza la terminal 1.
+Without `-p figure:=...` it follows the `square`. If the name does not exist, the node lists the available figures. Each time you run it, the robot follows the figure once from wherever it is; to go back to the start, relaunch terminal 1.
 
-`self_controller` evalúa la figura 20 veces por segundo, pasa la velocidad al marco del robot con `mundo_a_robot()`, calcula las ruedas con `cinematica_inversa()` y las publica en `/do100_0000/wheel_velocity_controller/commands`, en el orden `[fl, fr, rl, rr]` (rad/s). Después de editar los archivos no hace falta recompilar: vuelve a ejecutar el nodo.
+`self_controller` evaluates the figure 20 times per second, converts the velocity to the robot frame with `world_to_robot()`, computes the wheels with `inverse_kinematics()` and publishes them on `/do100_0000/wheel_velocity_controller/commands`, in the order `[fl, fr, rl, rr]` (rad/s). After editing the files there is no need to rebuild: just run the node again.
 
-El launch también corre `graficar`, que mide cada recorrido. En RViz se ven tres caminos: el **deseado** (blanco), el **real** según Gazebo (azul) y el de la **odometría** calculada con la velocidad de las ruedas (naranja). Al terminar guarda en `~/taller_resultados/` un gráfico con los tres caminos y el error de posición respecto al deseado.
+The launch also runs `plotter`, which measures each run. RViz shows three paths: the **desired** one (white), the **actual** one according to Gazebo (blue) and the **odometry** one computed from the wheel velocities (orange). At the end it saves to `~/workshop_results/` a plot with the three paths and the position error with respect to the desired one.
 
-| Tópico | Contenido |
+| Topic | Content |
 |---|---|
-| `/taller/pose_real` | pose exacta del robot en Gazebo |
-| `/taller/odometria` | odometría: velocidad de las ruedas integrada con la cinemática directa |
-| `/taller/camino/deseado`, `/real`, `/odometria` | caminos del recorrido (`nav_msgs/Path`), en el marco `world` |
+| `/workshop/ground_truth` | exact robot pose in Gazebo |
+| `/workshop/odometry` | odometry: wheel velocities integrated with the forward kinematics |
+| `/workshop/path/desired`, `/actual`, `/odometry` | paths of the run (`nav_msgs/Path`), in the `world` frame |
 
-La odometría solo sabe lo que giraron las ruedas: si una rueda patina, no se entera. Por eso el camino real puede alejarse del deseado aunque la odometría diga que va bien.
+The odometry only knows how much the wheels turned: if a wheel slips, it does not notice. That is why the actual path can drift from the desired one even when the odometry says everything is fine.
 
-## 2. Mapeo con el controlador de Clearpath
+## 2. Mapping with Clearpath's controller
 
-Con Nav2 y slam_toolbox instalados (sección 4 de [`REQUERIMIENTOS.md`](REQUERIMIENTOS.md)), elige uno de los [mundos disponibles](#mundos-disponibles):
+With Nav2 and slam_toolbox installed (section 4 of [`REQUIREMENTS.md`](REQUIREMENTS.md)), pick one of the [available worlds](#available-worlds):
 
 ```bash
-# Terminal 1: simulación con el controlador de Clearpath en el mundo a mapear
-ros2 launch taller_omni simulacion.launch.py mundo:=oficina_2
+# Terminal 1: simulation with Clearpath's controller in the world to map
+ros2 launch omni_workshop simulation.launch.py world:=office_2
 
-# Terminal 2: SLAM y RViz con el mapa (el mapa se publica en /do100_0000/map)
-ros2 launch taller_omni mapeo.launch.py
+# Terminal 2: SLAM and RViz with the map (the map is published on /do100_0000/map)
+ros2 launch omni_workshop mapping.launch.py
 
-# Terminal 3: guardar el mapa cuando esté completo (crea ~/mapa_oficina_2.pgm y .yaml)
-ros2 run nav2_map_server map_saver_cli -f ~/mapa_oficina_2 \
+# Terminal 3: save the map when it is complete (creates ~/map_office_2.pgm and .yaml)
+ros2 run nav2_map_server map_saver_cli -f ~/map_office_2 \
   --ros-args -r map:=/do100_0000/map -p use_sim_time:=true
 ```
 
-`mapeo.launch.py` lanza el SLAM de Clearpath (`clearpath_nav2_demos`) y un RViz con el marco fijo `map`, el mapa, el robot y los lidars (`taller_omni/rviz/mapeo.rviz`). Las transformadas del robot, y la `map → odom` que publica el SLAM, van en `/do100_0000/tf` y `/do100_0000/tf_static`, no en `/tf`: por eso el launch abre RViz con esos remapeos. Un `rviz2` abierto a mano sin ellos no encuentra el frame del robot ni `map`.
+`mapping.launch.py` launches Clearpath's SLAM (`clearpath_nav2_demos`) and an RViz with the `map` fixed frame, the map, the robot and the lidars (`omni_workshop/rviz/mapping.rviz`). The robot transforms, and the `map → odom` one published by SLAM, are on `/do100_0000/tf` and `/do100_0000/tf_static`, not on `/tf`: that is why the launch opens RViz with those remappings. An `rviz2` opened by hand without them cannot find the robot frame or `map`.
 
-Para recorrer el mundo, en el panel **Teleop omnidireccional** de la GUI de Gazebo (a la derecha): mantener presionada una flecha mueve el robot y al soltar se detiene. Con el panel enfocado también responde a `W`/`S` (avanzar), `A`/`D` (lateral) y `Q`/`E` (girar). El panel publica en `/do100_0000/cmd_vel`, y el controlador de Clearpath convierte ese comando en la velocidad de cada rueda, como hiciste tú en la parte 1.
+To drive around the world, use the **Omnidirectional teleop** panel of the Gazebo GUI (on the right): holding an arrow moves the robot and releasing it stops. With the panel focused it also responds to `W`/`S` (forward), `A`/`D` (sideways) and `Q`/`E` (rotate). The panel publishes on `/do100_0000/cmd_vel`, and Clearpath's controller turns that command into the velocity of each wheel, as you did in part 1.
 
-#### Note: Ejemplos de Mapping usando Lidar 2D 
-<p align="center"> 
-  <img src="taller_omni/img/mapa_slam.png" alt="Mapa construido con SLAM en RViz" height="250">
-  <img src="taller_omni/img/mapa_slam_2.png" alt="Mapa construido con SLAM en RViz" height="250">
+#### Note: mapping examples with a 2D lidar
+<p align="center">
+  <img src="omni_workshop/img/slam_map.png" alt="Map built with SLAM in RViz" height="250">
+  <img src="omni_workshop/img/slam_map_2.png" alt="Map built with SLAM in RViz" height="250">
 </p>
 
-<p align="center"> 
-  <img src="taller_omni/img/mapa_slam_3.png" alt="Mapa construido con SLAM en RViz" height="250">
+<p align="center">
+  <img src="omni_workshop/img/slam_map_3.png" alt="Map built with SLAM in RViz" height="250">
 </p>
 
 
-## Mundos disponibles
+## Available worlds
 
-| `mundo:=` | Escenario |
+| `world:=` | Scenario |
 |---|---|
-| `arena` | Arena de 6 × 6 m con paredes de 0,8 m y líneas en el piso cada 1 m, para probar trayectorias; el robot aparece en (0, −1,5), centrado y más cerca de la pared de abajo, mirando hacia +x |
-| `coral` | Laboratorio CoRAL  |
-| `casa` | Vivienda de una planta, 17 × 9 m |
-| `oficina_0` | Oficina pequeña con 5 despachos,  11 × 9,75 m |
-| `oficina_1` | Planta abierta con salas perimetrales, 19,3 × 10,65 m |
-| `oficina_2` | Planta alargada con despachos y patio, 13,5 × 22,8 m |
-| `oficina_3` (por defecto) | Salón de belleza con muros curvos, 14,4 × 18 m |
-| `oficina_4` | Clínica de ortodoncia con muros curvos, 32 × 18,15 m |
+| `arena` | 6 × 6 m arena with 0.8 m walls and floor lines every 1 m, for testing trajectories; the robot spawns at (0, −1.5), centered and closer to the bottom wall, facing +x |
+| `coral` | CoRAL laboratory |
+| `house` | Single-story house, 17 × 9 m |
+| `office_0` | Small office with 5 private offices, 11 × 9.75 m |
+| `office_1` | Open floor plan with perimeter rooms, 19.3 × 10.65 m |
+| `office_2` | Long floor plan with private offices and a courtyard, 13.5 × 22.8 m |
+| `office_3` (default) | Beauty salon with curved walls, 14.4 × 18 m |
+| `office_4` | Orthodontic clinic with curved walls, 32 × 18.15 m |
 
-Cualquier mundo se abre con `ros2 launch taller_omni simulacion.launch.py mundo:=<nombre>` (controlador de Clearpath). La posición inicial del robot en cada mundo está en `taller_omni/config/mundos.yaml`; se puede cambiar al lanzar con `x:=`, `y:=` y `yaw:=`. El Dingo-O mide unos 0,68 × 0,57 m: en los escenarios de interiores pasa los vanos (1,20 m) y recorre las zonas abiertas, pero no entra en los cuartos pequeños.
+Any world opens with `ros2 launch omni_workshop simulation.launch.py world:=<name>` (Clearpath's controller). The start pose of the robot in each world is in `omni_workshop/config/worlds.yaml`; it can be changed at launch with `x:=`, `y:=` and `yaw:=`. The Dingo-O is about 0.68 × 0.57 m: in the indoor scenarios it fits through the doorways (1.20 m) and drives through the open areas, but it does not fit in the small rooms.
 
-## Problemas frecuentes
+## Troubleshooting
 
-| Síntoma | Causa probable |
+| Symptom | Likely cause |
 |---|---|
-| `Package 'taller_omni' not found` | falta `source install/setup.bash` en esa terminal |
-| `self_controller` se queda en *"Esperando al simulador"* | el simulador no está corriendo, o todavía no aparece *"Controlador por rueda activo"* |
-| `Falta tu parte: completa ...` | esa función de `self_controller.py` todavía tiene el `raise NotImplementedError` |
-| El robot no responde, aparece *"No clock received"* o el controlador no arranca | quedó corriendo una simulación anterior: ciérrala, ejecuta `pkill -f "gz sim"` y vuelve a lanzar |
-| El panel de Gazebo no mueve el robot | se lanzó `taller.launch.py` (controlador propio); para la parte 2 usa `taller_omni simulacion.launch.py` |
-| RViz: el frame del robot o `map` no existe | RViz se abrió sin remapear `/tf`; ábrelo con `ros2 launch taller_omni mapeo.launch.py` |
-| RViz: error `GLSL link result ... indexed_8bit_image` | aviso del driver gráfico al dibujar el mapa; si el mapa se ve, se puede ignorar |
-| El robot choca con una pared | no hay espacio desde donde quedó: relanza el simulador para volver al inicio |
+| `Package 'omni_workshop' not found` | missing `source install/setup.bash` in that terminal |
+| `self_controller` stays at *"Waiting for the simulation"* | the simulation is not running, or *"Wheel controller active"* has not appeared yet |
+| `Your part is missing: complete ...` | that function in `self_controller.py` still has the `raise NotImplementedError` |
+| The robot does not respond, *"No clock received"* appears or the controller does not start | a previous simulation is still running: close it, run `pkill -f "gz sim"` and launch again |
+| The Gazebo panel does not move the robot | `workshop.launch.py` was launched (own controller); for part 2 use `omni_workshop simulation.launch.py` |
+| RViz: the robot frame or `map` does not exist | RViz was opened without remapping `/tf`; open it with `ros2 launch omni_workshop mapping.launch.py` |
+| RViz: error `GLSL link result ... indexed_8bit_image` | graphics driver warning when drawing the map; if the map shows, it can be ignored |
+| The robot hits a wall | there is no room from where it stopped: relaunch the simulation to go back to the start |

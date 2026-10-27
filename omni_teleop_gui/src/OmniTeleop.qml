@@ -2,8 +2,8 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-// Mantener presionado un boton (o una tecla con el panel enfocado) mueve el
-// robot; al soltar se detiene. Se publica a 10 Hz mientras haya un comando.
+// Holding a button (or a key while the panel has focus) moves the robot;
+// releasing it stops. Commands are published at 10 Hz while active.
 ColumnLayout {
   id: root
   Layout.minimumWidth: 300
@@ -13,7 +13,7 @@ ColumnLayout {
   spacing: 8
   focus: true
 
-  // Escalas -1, 0, 1 en cada eje segun botones y teclas
+  // Scales -1, 0, 1 on each axis from buttons and keys
   property int sx: 0
   property int sy: 0
   property int sw: 0
@@ -31,7 +31,7 @@ ColumnLayout {
     OmniTeleop.Publish(sx * linSlider.value, sy * linSlider.value, sw * angSlider.value)
   }
 
-  onMovingChanged: send()   // envia el primer comando, o el cero al soltar
+  onMovingChanged: send()   // sends the first command, or the zero on release
 
   Timer {
     interval: 100
@@ -63,8 +63,8 @@ ColumnLayout {
     }
   }
 
-  // --- Pad de 8 direcciones -------------------------------------------------
-  // [vx, vy] para cada boton; vy positivo = izquierda (convencion ROS)
+  // --- 8-direction pad ---------------------------------------------------------
+  // [vx, vy] for each button; positive vy = left (ROS convention)
   GridLayout {
     Layout.alignment: Qt.AlignHCenter
     columns: 3
@@ -91,30 +91,30 @@ ColumnLayout {
     }
   }
 
-  // --- Giro -------------------------------------------------------------------
+  // --- Rotation ---------------------------------------------------------------
   RowLayout {
     Layout.alignment: Qt.AlignHCenter
     spacing: 4
     Button {
-      text: "↺ girar"
+      text: "↺ rotate"
       Layout.preferredWidth: 107
       onPressedChanged: { root.sw = pressed ? 1 : 0; if (!pressed) root.forceActiveFocus() }
     }
     Button {
-      text: "girar ↻"
+      text: "rotate ↻"
       Layout.preferredWidth: 107
       onPressedChanged: { root.sw = pressed ? -1 : 0; if (!pressed) root.forceActiveFocus() }
     }
   }
 
-  // --- Velocidades ------------------------------------------------------------
-  Label { text: "Velocidad lineal: " + linSlider.value.toFixed(2) + " m/s" }
+  // --- Velocities -------------------------------------------------------------
+  Label { text: "Linear velocity: " + linSlider.value.toFixed(2) + " m/s" }
   Slider {
     id: linSlider
     Layout.fillWidth: true
     from: 0.05; to: OmniTeleop.maxLinear; value: OmniTeleop.maxLinear / 2
   }
-  Label { text: "Velocidad de giro: " + angSlider.value.toFixed(2) + " rad/s" }
+  Label { text: "Angular velocity: " + angSlider.value.toFixed(2) + " rad/s" }
   Slider {
     id: angSlider
     Layout.fillWidth: true
@@ -126,8 +126,8 @@ ColumnLayout {
     wrapMode: Text.WordWrap
     color: root.activeFocus ? "#2e7d32" : "#757575"
     text: root.activeFocus
-          ? "Teclado activo: W/S avanzar, A/D lateral, Q/E girar"
-          : "Haz clic aqui para usar el teclado (W/A/S/D, Q/E)"
+          ? "Keyboard active: W/S forward, A/D sideways, Q/E rotate"
+          : "Click here to use the keyboard (W/A/S/D, Q/E)"
   }
 
   MouseArea {

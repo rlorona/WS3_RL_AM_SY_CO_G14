@@ -16,7 +16,7 @@ Visualization Manager:
       Reference Frame: <Fixed Frame>
       Value: true
     - Class: rviz_default_plugins/Map
-      Name: Mapa (SLAM)
+      Name: Map (SLAM)
       Enabled: true
       Topic:
         Value: /do100_0000/map
@@ -44,7 +44,7 @@ Visualization Manager:
       Enabled: false
       Value: false
     - Class: rviz_default_plugins/LaserScan
-      Name: Lidar delantero (lidar2d_0)
+      Name: Front lidar (lidar2d_0)
       Enabled: true
       Topic:
         Value: /do100_0000/sensors/lidar2d_0/scan
@@ -59,7 +59,7 @@ Visualization Manager:
       Decay Time: 0
       Value: true
     - Class: rviz_default_plugins/LaserScan
-      Name: Lidar trasero (lidar2d_1)
+      Name: Rear lidar (lidar2d_1)
       Enabled: true
       Topic:
         Value: /do100_0000/sensors/lidar2d_1/scan

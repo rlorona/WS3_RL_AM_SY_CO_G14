@@ -1,40 +1,40 @@
-# Mundos disponibles para el workshop 03.
-#   ros2 launch taller_omni simulacion.launch.py mundo:=<clave>
+# Worlds available in workshop 03.
+#   ros2 launch omni_workshop simulation.launch.py world:=<key>
 #
-# El mundo es worlds/worlds/<clave>.sdf (paquete worlds) y sus piezas estan en worlds/models/.
+# Each world is worlds/worlds/<key>.sdf (worlds package) and its pieces are in worlds/models/.
 #
-# world:  nombre del <world> dentro del SDF (Gazebo lo usa en sus topics y servicios)
-# inicio: posicion inicial del Dingo-O [x, y, yaw] en metros y radianes. Se eligio
-#         como una celda libre con 0,5 m de holgura alrededor del robot.
+# gz_world:    name of the <world> inside the SDF (Gazebo uses it in its topics and services)
+# start:       initial pose of the Dingo-O [x, y, yaw] in meters and radians, chosen as a
+#              free cell with 0.5 m of clearance around the robot.
 arena:
-  descripcion: Arena de 6 x 6 m con paredes, para probar trayectorias
-  world: arena
-  inicio: [0.0, -1.5, 0.0]        # centrado en x, 1,5 m por debajo del centro
+  description: 6 x 6 m arena with walls, for testing trajectories
+  gz_world: arena
+  start: [0.0, -1.5, 0.0]         # centered in x, 1.5 m below the center
 coral:
-  descripcion: Laboratorio CoRAL (plano PL-002), con la jaula de drones
-  world: coral
-  inicio: [-4.875, -0.3, 0.0]     # centro-abajo de la jaula
-casa:
-  descripcion: Vivienda de una planta, 17 x 9 m, 19 ambientes
-  world: casa_world
-  inicio: [15.07, 4.57, 0.0]      # antesala; los cuartos pequenos no admiten el Dingo-O
-oficina_0:
-  descripcion: Oficina pequena con 5 despachos, 11 x 9,75 m
-  world: oficina_0_world
-  inicio: [2.07, 3.12, 0.0]
-oficina_1:
-  descripcion: Planta abierta con salas perimetrales, 19,3 x 10,65 m
-  world: oficina_1_world
-  inicio: [6.17, 1.98, 0.0]       # cocina, junto al acceso principal
-oficina_2:
-  descripcion: Planta alargada con despachos privados y patio, 13,5 x 22,8 m
-  world: oficina_2_world
-  inicio: [6.77, 20.33, 0.0]      # lounge, acceso norte
-oficina_3:
-  descripcion: Salon de belleza con muros curvos, 14,4 x 18 m
-  world: oficina_3_world
-  inicio: [5.82, 1.38, 0.0]       # acceso por la fachada sur
-oficina_4:
-  descripcion: Clinica de ortodoncia con muros curvos, 32 x 18,15 m
-  world: oficina_4_world
-  inicio: [3.22, 11.73, 0.0]      # recepcion
+  description: CoRAL laboratory (floor plan PL-002), with the drone cage
+  gz_world: coral
+  start: [-4.875, -0.3, 0.0]      # bottom center of the cage
+house:
+  description: Single-story house, 17 x 9 m, 19 rooms
+  gz_world: house_world
+  start: [15.07, 4.57, 0.0]       # anteroom; the small rooms do not fit the Dingo-O
+office_0:
+  description: Small office with 5 private offices, 11 x 9.75 m
+  gz_world: office_0_world
+  start: [2.07, 3.12, 0.0]
+office_1:
+  description: Open floor plan with perimeter rooms, 19.3 x 10.65 m
+  gz_world: office_1_world
+  start: [6.17, 1.98, 0.0]        # kitchen, next to the main entrance
+office_2:
+  description: Long floor plan with private offices and a courtyard, 13.5 x 22.8 m
+  gz_world: office_2_world
+  start: [6.77, 20.33, 0.0]       # lounge, north entrance
+office_3:
+  description: Beauty salon with curved walls, 14.4 x 18 m
+  gz_world: office_3_world
+  start: [5.82, 1.38, 0.0]        # entrance on the south facade
+office_4:
+  description: Orthodontic clinic with curved walls, 32 x 18.15 m
+  gz_world: office_4_world
+  start: [3.22, 11.73, 0.0]       # reception
