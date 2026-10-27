@@ -1,13 +1,10 @@
 # Paquetes de Clearpath: se descargan con  vcs import < dependencias.repos
 clearpath_ws/
 
-# Tiene su propio repositorio: github.com/davatorr1009/arena-coral-fusion
-coral_world/arena_referencia_fusion/
-
-# Respaldos y logs de Blender, renders pesados (los .jpg si se suben)
+# Solo se sube lo necesario para correr los mundos en Gazebo
+*.blend
 *.blend1
 .blender.log
-coral_world/renders/*.png
 
 # Python / Jupyter
 __pycache__/
