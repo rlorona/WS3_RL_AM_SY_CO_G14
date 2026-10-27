@@ -43,15 +43,19 @@ In the **robot frame**, $x$ points forward, $y$ to the left and $\omega$ is posi
 
 **From the world to the robot.** The trajectory is given in the world frame $(\dot x, \dot y, \dot\theta)$, but the robot moves in its own frame. If it is rotated by an angle $\theta$:
 
-$$\begin{bmatrix}v_x\\ v_y\end{bmatrix} = \begin{bmatrix}\cos\theta & \sin\theta\\ -\sin\theta & \cos\theta\end{bmatrix}\begin{bmatrix}\dot x\\ \dot y\end{bmatrix}, \qquad \omega = \dot\theta$$
+```math
+\begin{bmatrix}v_x\\ v_y\end{bmatrix} = \begin{bmatrix}\cos\theta & \sin\theta\\ -\sin\theta & \cos\theta\end{bmatrix}\begin{bmatrix}\dot x\\ \dot y\end{bmatrix}, \qquad \omega = \dot\theta
+```
 
 **Inverse kinematics of the mecanum wheels.** Each wheel has rollers at 45°, so combining the four any motion in the plane is possible:
 
-$$\begin{bmatrix}\omega_{fl}\\ \omega_{fr}\\ \omega_{rl}\\ \omega_{rr}\end{bmatrix} = \frac{1}{r}\begin{bmatrix}1 & -1 & -(l_x+l_y)\\ 1 & 1 & (l_x+l_y)\\ 1 & 1 & -(l_x+l_y)\\ 1 & -1 & (l_x+l_y)\end{bmatrix}\begin{bmatrix}v_x\\ v_y\\ \omega\end{bmatrix}$$
+```math
+\begin{bmatrix}\omega_{fl}\\ \omega_{fr}\\ \omega_{rl}\\ \omega_{rr}\end{bmatrix} = \frac{1}{r}\begin{bmatrix}1 & -1 & -(l_x+l_y)\\ 1 & 1 & (l_x+l_y)\\ 1 & 1 & -(l_x+l_y)\\ 1 & -1 & (l_x+l_y)\end{bmatrix}\begin{bmatrix}v_x\\ v_y\\ \omega\end{bmatrix}
+```
 
-- **$v_x$** (forward): the 4 wheels spin the same.
-- **$v_y$** (sideways to the left): the wheels on each diagonal spin the same and the two diagonals spin in opposite directions.
-- **$\omega$** (rotate): the left wheels spin backwards and the right ones forwards, with lever arm $l_x + l_y$.
+- **$`v_x`$** (forward): the 4 wheels spin the same.
+- **$`v_y`$** (sideways to the left): the wheels on each diagonal spin the same and the two diagonals spin in opposite directions.
+- **$`\omega`$** (rotate): the left wheels spin backwards and the right ones forwards, with lever arm $l_x + l_y$.
 
 <p align="center">
   <img src="omni_workshop/img/mecanum_movements.png" alt="Spin direction of each wheel for the basic Dingo-O motions" width="600">
