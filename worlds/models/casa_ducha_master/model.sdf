@@ -7,8 +7,7 @@
         <geometry><mesh><uri>model://casa_ducha_master/meshes/mesh.dae</uri></mesh></geometry>
       </visual>
       <collision name="collision">
-        <pose>0 0 1.0325 0 0 0</pose>
-        <geometry><box><size>1.0400 0.9275 2.0650</size></box></geometry>
+        <geometry><mesh><uri>model://casa_ducha_master/meshes/mesh.dae</uri></mesh></geometry>
         <surface>
           <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
         </surface>

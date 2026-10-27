@@ -7,8 +7,7 @@
         <geometry><mesh><uri>model://oficina_2_mesa_cocina/meshes/mesh.dae</uri></mesh></geometry>
       </visual>
       <collision name="collision">
-        <pose>0 0 0.3850 0 0 0</pose>
-        <geometry><box><size>1.6000 0.9000 0.7700</size></box></geometry>
+        <geometry><mesh><uri>model://oficina_2_mesa_cocina/meshes/mesh.dae</uri></mesh></geometry>
         <surface>
           <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
         </surface>

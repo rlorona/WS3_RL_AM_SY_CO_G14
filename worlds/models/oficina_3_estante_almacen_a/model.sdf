@@ -7,8 +7,7 @@
         <geometry><mesh><uri>model://oficina_3_estante_almacen_a/meshes/mesh.dae</uri></mesh></geometry>
       </visual>
       <collision name="collision">
-        <pose>0 0 1.0500 0 0 0</pose>
-        <geometry><box><size>2.0000 0.4000 2.1000</size></box></geometry>
+        <geometry><mesh><uri>model://oficina_3_estante_almacen_a/meshes/mesh.dae</uri></mesh></geometry>
         <surface>
           <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
         </surface>

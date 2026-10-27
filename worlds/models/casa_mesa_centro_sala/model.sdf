@@ -7,8 +7,7 @@
         <geometry><mesh><uri>model://casa_mesa_centro_sala/meshes/mesh.dae</uri></mesh></geometry>
       </visual>
       <collision name="collision">
-        <pose>0 0 0.2125 0 0 0</pose>
-        <geometry><box><size>0.6000 1.1000 0.4250</size></box></geometry>
+        <geometry><mesh><uri>model://casa_mesa_centro_sala/meshes/mesh.dae</uri></mesh></geometry>
         <surface>
           <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
         </surface>

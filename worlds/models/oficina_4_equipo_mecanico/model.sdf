@@ -7,8 +7,7 @@
         <geometry><mesh><uri>model://oficina_4_equipo_mecanico/meshes/mesh.dae</uri></mesh></geometry>
       </visual>
       <collision name="collision">
-        <pose>0 0 0.9700 0 0 0</pose>
-        <geometry><box><size>2.1400 1.4400 1.9400</size></box></geometry>
+        <geometry><mesh><uri>model://oficina_4_equipo_mecanico/meshes/mesh.dae</uri></mesh></geometry>
         <surface>
           <friction><ode><mu>0.8</mu><mu2>0.8</mu2></ode></friction>
         </surface>

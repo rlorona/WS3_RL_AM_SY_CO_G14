@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
-project(mundos_workshop)
+project(worlds)
 
 find_package(ament_cmake REQUIRED)
 
-install(DIRECTORY launch rviz config worlds models DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY worlds models DESTINATION share/${PROJECT_NAME})
 
 ament_package()
