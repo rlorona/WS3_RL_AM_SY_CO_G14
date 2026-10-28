@@ -114,4 +114,10 @@ FIGURES = {
     'figure_eight': lambda: Trajectory(heading=90).arc(0.6, 360).arc(0.6, -360),   # starts towards +y
     'demo': lambda: (Trajectory().line(1.0, 0).turn(90).arc(0.5, 180).diagonal(0.7, -45)
                      .line(0, -0.5, rotate=-90)),
+    # Letters R and M, 1.6 m tall, one after the other; the robot always faces +x
+    'RM': lambda: (Trajectory()
+                   .line(0, 1.6).line(0.5, 0).arc(0.4, -180).line(-0.5, 0)   # R: stem and bowl
+                   .line(0.9, -0.8)                                          # R: leg
+                   .line(0.4, 0)                                             # to the M
+                   .line(0, 1.6).line(0.5, -0.8).line(0.5, 0.8).line(0, -1.6)),  # M
 }

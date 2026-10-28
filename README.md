@@ -128,6 +128,11 @@ The launch also runs `plotter`, which measures each run. RViz shows three paths:
 
 The odometry only knows how much the wheels turned: if a wheel slips, it does not notice. That is why the actual path can drift from the desired one even when the odometry says everything is fine.
 
+<p align="center">
+  <img src="omni_workshop/img/trajectory.png" alt="Trajectory with real pose and odometry" height="420">
+</p>
+
+
 ## 2. Mapping with Clearpath's controller
 
 With Nav2 and slam_toolbox installed (section 4 of [`REQUIREMENTS.md`](REQUIREMENTS.md)), pick one of the [available worlds](#available-worlds):
