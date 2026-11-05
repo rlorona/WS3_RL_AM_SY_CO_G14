@@ -27,15 +27,25 @@ LY = 0.1854   # distance from the center to the wheel center (sideways) [m]
 WHEELS_TOPIC = '/do100_0000/wheel_velocity_controller/commands'
 RATE = 20.0   # Hz
 
+# Safety limit of the wheel joints [rad/s] (0.75 m/s on a 0.05 m wheel).
+# It is only used to scale the command; it does not change the model.
+WHEEL_MAX = 15.0
+
 
 def world_to_robot(theta, dx, dy, dtheta):
     """Velocity in the WORLD frame -> velocity in the ROBOT frame.
 
     theta: robot orientation. dx, dy, dtheta: desired velocity in the world.
     Returns (vx, vy, w) in the robot frame.
+
+    The robot frame has x forward, y to the left and w counterclockwise, so
+    this is a rotation by -theta:
+
+        [vx]   [ cos(theta)  sin(theta)] [dx]
+        [vy] = [-sin(theta)  cos(theta)] [dy]
     """
-    # >>> WRITE HERE <<<
-    raise NotImplementedError('complete world_to_robot() in self_controller.py')
+    c, s = math.cos(theta), math.sin(theta)
+    return c * dx + s * dy, -s * dx + c * dy, dtheta
 
 
 def inverse_kinematics(vx, vy, w):
@@ -43,9 +53,44 @@ def inverse_kinematics(vx, vy, w):
 
     Returns (w_fl, w_fr, w_rl, w_rr): front left, front right, rear left and
     rear right. Use R, LX and LY.
+
+    Mecanum wheels with rollers at 45 degrees (README matrix):
+
+        w_fl = (vx - vy - (LX + LY) * w) / R
+        w_fr = (vx + vy + (LX + LY) * w) / R
+        w_rl = (vx + vy - (LX + LY) * w) / R
+        w_rr = (vx - vy + (LX + LY) * w) / R
     """
-    # >>> WRITE HERE <<<
-    raise NotImplementedError('complete inverse_kinematics() in self_controller.py')
+    k = LX + LY
+    return ((vx - vy - k * w) / R,
+            (vx + vy + k * w) / R,
+            (vx + vy - k * w) / R,
+            (vx - vy + k * w) / R)
+
+
+def forward_kinematics(w_fl, w_fr, w_rl, w_rr):
+    """Wheel velocities [rad/s] -> robot velocity (vx, vy, w).
+
+    Inverse of inverse_kinematics(); the plotter uses the same equations to
+    integrate the odometry. Kept here so both can be checked against each other.
+    """
+    k = LX + LY
+    return (R / 4 * (w_fl + w_fr + w_rl + w_rr),
+            R / 4 * (-w_fl + w_fr + w_rl - w_rr),
+            R / (4 * k) * (-w_fl + w_fr - w_rl + w_rr))
+
+
+def saturate(wheels, limit=WHEEL_MAX):
+    """Scales all four wheels by the same factor if one exceeds the limit.
+
+    Scaling instead of clipping keeps the direction of the motion: clipping
+    only the fastest wheel would curve the robot.
+    """
+    peak = max(abs(v) for v in wheels)
+    if peak <= limit:
+        return tuple(wheels)
+    scale = limit / peak
+    return tuple(v * scale for v in wheels)
 
 
 class SelfController(Node):
@@ -88,7 +133,7 @@ class SelfController(Node):
 
         x, y, theta, dx, dy, dtheta = self.figure(t)
         vx, vy, w = world_to_robot(theta, dx, dy, dtheta)
-        self.send(inverse_kinematics(vx, vy, w))
+        self.send(saturate(inverse_kinematics(vx, vy, w)))
 
         ref = PoseStamped()
         ref.header.stamp = self.get_clock().now().to_msg()
@@ -114,7 +159,12 @@ def main():
             print(e.code)
     finally:
         if node is not None:
-            node.send((0.0, 0.0, 0.0, 0.0))
+            try:
+                node.send((0.0, 0.0, 0.0, 0.0))
+            except Exception:
+                # The context may already be invalid (e.g. the simulation was
+                # closed first): stopping the wheels is best effort.
+                pass
             node.destroy_node()
         if rclpy.ok():
             rclpy.shutdown()

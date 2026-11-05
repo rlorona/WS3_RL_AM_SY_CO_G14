@@ -26,6 +26,8 @@ setup(
         'console_scripts': [
             'self_controller = omni_workshop.self_controller:main',
             'plotter = omni_workshop.plotter:main',
+            'explore = omni_workshop.explore:main',
+            'coverage = omni_workshop.coverage:main',
         ],
     },
 )

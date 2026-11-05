@@ -24,8 +24,17 @@ def generate_launch_description():
 
     simulation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(pkg, 'launch', 'simulation.launch.py')),
-        # The start pose of each world is in config/worlds.yaml
-        launch_arguments=[('world', LaunchConfiguration('world')), ('rviz', 'false')])
+        # The start pose of each world is in config/worlds.yaml; x/y/yaw override it
+        # (used by the letters figure, which needs the robot away from the walls).
+        launch_arguments=[('world', LaunchConfiguration('world')),
+                          ('rviz', 'false'),
+                          ('gui', LaunchConfiguration('gui')),
+                          ('robot_config', LaunchConfiguration('robot_config')),
+                          ('lidar_rate', LaunchConfiguration('lidar_rate')),
+                          ('lidar_ang_res', LaunchConfiguration('lidar_ang_res')),
+                          ('x', LaunchConfiguration('x')),
+                          ('y', LaunchConfiguration('y')),
+                          ('yaw', LaunchConfiguration('yaw'))])
 
     # Ground truth, odometry and paths of each run; saves the plot at the end
     plotter = Node(package='omni_workshop', executable='plotter', output='screen')
@@ -57,6 +66,16 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('world', default_value='arena'),
         DeclareLaunchArgument('rviz', default_value='false', choices=['true', 'false']),
+        DeclareLaunchArgument('gui', default_value='true', choices=['true', 'false']),
+        # dingo_o.yaml (two lidars) or dingo_o_fast.yaml (one lidar, slow PCs)
+        DeclareLaunchArgument('robot_config', default_value='dingo_o.yaml'),
+        # Lidar rate and resolution of the generated description (see simulation.launch.py)
+        DeclareLaunchArgument('lidar_rate', default_value='40'),
+        DeclareLaunchArgument('lidar_ang_res', default_value='0.5'),
+        # Empty: keep the start pose of config/worlds.yaml
+        DeclareLaunchArgument('x', default_value=''),
+        DeclareLaunchArgument('y', default_value=''),
+        DeclareLaunchArgument('yaw', default_value=''),
         # rviz goes before the simulation: the include sets rviz:=false so it does not
         # open the RViz of simulation.launch.py, and includes do not isolate arguments
         rviz,

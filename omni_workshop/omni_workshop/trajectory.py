@@ -17,6 +17,7 @@ import math
 
 LINEAR_SPEED = 0.2    # default speed on lines and arcs [m/s]
 TURN_SPEED = 0.5      # default speed on in-place turns [rad/s]
+LETTER_SPEED = 0.15   # a bit slower for the letters: less wheel slip [m/s]
 
 
 class Trajectory:
@@ -120,4 +121,54 @@ FIGURES = {
                    .line(0.9, -0.8)                                          # R: leg
                    .line(0.4, 0)                                             # to the M
                    .line(0, 1.6).line(0.5, -0.8).line(0.5, 0.8).line(0, -1.6)),  # M
+
+    # ---------------------------------------------------------------------
+    # Group 14: figure with every primitive (line, diagonal, arc)
+    # ---------------------------------------------------------------------
+    # Closed figure: rectangle with a rounded corner and a diagonal return.
+    # It starts and ends at the robot's initial position.
+    'grupo14': lambda: (Trajectory()
+                        .line(1.2, 0.0)          # bottom side
+                        .line(0.0, 1.0)          # right side
+                        .arc(0.6, 90)            # rounded top-right corner
+                        .line(-1.2, 0.0)         # top side
+                        .diagonal(1.1314, 225)   # diagonal back to the left
+                        .line(1.4, 0.0)          # bottom side, to the start
+                        .line(0.0, -0.8)),       # close at the start
+
+    # ---------------------------------------------------------------------
+    # Group 14: the initials R A S C (Ricardo, Alexa, Steven, Cristhian)
+    # ---------------------------------------------------------------------
+    # The robot keeps facing +x the whole time and only translates: that is the
+    # point of the mecanum wheels. Each letter is 0.55 m wide and 1.10 m tall,
+    # with 0.15 m between letters (the word is 2.65 m long). The connectors
+    # between letters are drawn at the baseline (R->A, A->S) and at the top
+    # (S->C), so they do not cross the letters.
+    #
+    # Start the arena at x:=-1.3 y:=-0.8 so the word is centred:
+    #   ros2 launch omni_workshop workshop.launch.py rviz:=true x:=-1.3 y:=-0.8
+    #   ros2 run omni_workshop self_controller --ros-args -p figure:=RASC
+    'RASC': lambda: (Trajectory()
+                     .line(0.00, 1.10, v=LETTER_SPEED)    # R: stem
+                     .line(0.30, 0.00, v=LETTER_SPEED)    # R: top bar
+                     .arc(0.275, -180, v=LETTER_SPEED)    # R: bowl
+                     .line(-0.30, 0.00, v=LETTER_SPEED)   # R: back to the stem
+                     .line(0.40, -0.55, v=LETTER_SPEED)   # R: leg
+                     .line(0.30, 0.00, v=LETTER_SPEED)    # gap R -> A
+                     .line(0.275, 1.10, v=LETTER_SPEED)   # A: left leg up to the apex
+                     .line(0.275, -1.10, v=LETTER_SPEED)  # A: right leg down
+                     .line(-0.55, 0.00, v=LETTER_SPEED)   # A: base (joins the baseline)
+                     .line(0.1125, 0.45, v=LETTER_SPEED)  # A: up the left leg
+                     .line(0.325, 0.00, v=LETTER_SPEED)   # A: crossbar
+                     .line(0.1125, -0.45, v=LETTER_SPEED)  # A: down the right leg
+                     .line(0.15, 0.00, v=LETTER_SPEED)    # gap A -> S
+                     .line(0.55, 0.00, v=LETTER_SPEED)    # S: bottom bar
+                     .line(0.00, 0.55, v=LETTER_SPEED)    # S: lower right side
+                     .line(-0.55, 0.00, v=LETTER_SPEED)   # S: middle bar
+                     .line(0.00, 0.55, v=LETTER_SPEED)    # S: upper left side
+                     .line(0.55, 0.00, v=LETTER_SPEED)    # S: top bar
+                     .line(0.70, 0.00, v=LETTER_SPEED)    # gap S -> C
+                     .line(-0.55, 0.00, v=LETTER_SPEED)   # C: top bar
+                     .line(0.00, -1.10, v=LETTER_SPEED)   # C: left side
+                     .line(0.55, 0.00, v=LETTER_SPEED)),  # C: bottom bar
 }
