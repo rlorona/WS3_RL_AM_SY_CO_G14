@@ -253,19 +253,23 @@ both were measured in Gazebo:
 
 The background difference is the **non-holonomic constraint** of the
 differential model: its velocity is always aligned with its orientation, so to
-reach a lateral point it must turn first. The omnidirectional robot breaks that
+reach a lateral point it must turn first. The constraint equation says exactly that: the component of the velocity perpendicular to the heading ($\dot{y}\cos\theta - \dot{x}\sin\theta$) must be zero. The omnidirectional robot breaks that
 constraint because the rollers let the wheel push in a direction different from
 its own plane.
+
+Example. To move 1 m to the left, a differential robot must turn 90°, drive 1 m and turn back (three manoeuvres). The Dingo-O simply sets $v_y \neq 0$ and the wheels spin in opposite diagonal pairs (see the lateral motion case in section 3.2). This is what we used to draw RASC without ever rotating the robot.
+
+Why the matrices have different sizes. The differential matrix is 2×2 because 2 wheels produce 2 velocities, so it can be inverted directly. The mecanum matrix is 4×3: there are four wheel speeds but only three body velocities, so the system is redundant. Going from the robot to the wheels (IK) always has a solution; going back (FK) uses the pseudo-inverse, which is why the forward kinematics in section 2.3 has the factor $r/4$: it averages the four wheels. That redundancy is also what makes slip harder to detect, since one wheel can be wrong without the robot noticing.
 
 ### 6.2 Advantages of each model
 
 **Differential advantages**
 
-- Simpler mechanics and control: two motors, two encoders, a 2×2 matrix.
+- Simpler mechanics and control: two motors, two encoders, a 2×2 matrix; there is less that can fail and less to tune.
 - Cheaper to build and maintain (half the motors and wheels).
 - Higher payload and traction: all the weight rests on driving wheels.
-- More reliable odometry: fewer sources of slip.
-- Works better on uneven, dusty or outdoor floors.
+- More reliable odometry: fewer wheels and no rollers means fewer sources of slip, so the estimate drifts less.
+- Works better on uneven, dusty or outdoor floors: large rubber wheels roll over small obstacles; rollers get blocked.
 - Higher energy efficiency on straights (no roller losses).
 - Less wear and less maintenance.
 
@@ -308,6 +312,14 @@ Justification:
 - Software: ROS 2 Jazzy + Nav2 + `slam_toolbox`, with the greenhouse map
   loaded in localization mode.
 
+How it would work in a typical cycle.
+
+1. The robot is loaded with trays at the packing area and receives the target bed from the farm system.
+2. Nav2 plans the route along the main corridor using the saved map.
+3. At the entrance of the aisle, the robot does not need to turn: it slides sideways into the aisle and aligns with the bed using the LiDAR.
+4. While it moves along the bed, the camera and sensors record temperature, humidity and images of the plants for pest detection.
+5. It drops the tray, leaves the aisle in the same direction it entered (it can even go in reverse, since it has no "front") and returns.
+
 An equivalent alternative in a warehouse: **picking robot in distribution
 centres** (narrow aisles, loading and unloading stations).
 
@@ -333,7 +345,7 @@ electronics; on the Coast, humidity and salinity protection is required.
 | Electronics, wiring, safety | 1 | 180 | 180 |
 | **Estimated total** | | | **≈ 1,870** |
 
-With integration, testing and margin: **USD 2,500–3,500** per prototype.
+With integration, testing and margin: **USD 2,500–3,500** per prototype. The margin covers the items that are not in the table: import costs, spare parts, cables and connectors, and the engineering hours for assembly and testing. Prices are estimates and must be confirmed with quotes.
 
 **Local sourcing**
 
