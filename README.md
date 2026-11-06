@@ -1,3 +1,8 @@
+# WS3_RL_AM_SY_CO_G14 — Workshop 03, Grupo 14
+
+Repositorio de entregables del WS3 de Robots Articulados (Ricardo, Alexa,
+Steven, Cristhian).
+
 # Workshop 03 — Omnidirectional robot
 
 **Tested on:** Ubuntu 24.04 · ROS 2 Jazzy · Gazebo Harmonic (gz-sim 8)
