@@ -10,3 +10,6 @@ clearpath_ws/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# Deliverable videos: too large for GitHub, delivered in the tarball
+entregable 1/*.mp4
