@@ -15,6 +15,7 @@ tar \
   --exclude='./install' \
   --exclude='./log' \
   --exclude='./src/clearpath_ws' \
+  --exclude='./GUION_VIDEO.md' \
   --exclude='__pycache__' \
   --exclude='*.pyc' \
   --exclude='*.tar.gz' \
