@@ -23,6 +23,8 @@ cp -r "${ROOT}/src/omni_workshop" "${ROOT}/src/worlds" "${ROOT}/src/omni_teleop_
 cp -f "${ROOT}/src/README.md" "${ROOT}/src/REQUIREMENTS.md" "${ROOT}/src/dependencies.repos" \
       "${STAGE}/Entregable_1_Codigo/"
 
+find "${STAGE}/Entregable_1_Codigo" -type d -name "__pycache__" -prune -exec rm -rf {} +
+
 cp -f "${ROOT}/src/docs/REPORT_WS3.md" "${STAGE}/Entregable_2_Documentacion/"
 
 cp -f /home/ricardo/Downloads/WS3G14TrayectoriaRASC.mp4 "${STAGE}/Entregable_3_Videos/"
