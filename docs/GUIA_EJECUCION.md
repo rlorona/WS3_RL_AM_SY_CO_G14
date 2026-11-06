@@ -37,7 +37,7 @@ cd ~/workshop_03/src/omni_workshop
 # Cinemática: IK -> FK, casos conocidos, saturación
 python3 tools/test_kinematics.py
 
-# Figuras: tamaño, continuidad, cierre. Guarda docs/img/figures_check.png
+# Figuras: tamaño, continuidad, cierre (tools/validate_figures.py)
 python3 tools/validate_figures.py grupo14 RASC
 
 # Plano de los mundos (para entender el mapeo)
