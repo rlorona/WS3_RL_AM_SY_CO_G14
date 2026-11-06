@@ -195,6 +195,16 @@ ros2 run omni_workshop explore --ros-args -p time_limit:=600.0
 Elige metas en la frontera del mapa de SLAM y se detiene solo con
 `EXPLORATION FINISHED`. Después guarda el mapa con el comando de arriba.
 
+> Si el robot se va por una puerta exterior (los mundos `office_*` tienen
+> vanos abiertos al plano exterior y el LiDAR alcanza 20–25 m por ellos),
+> usa la alternativa `coverage.py`, que recorre por el plano interno:
+>
+> ```bash
+> ros2 run omni_workshop coverage --ros-args -p world:=office_0 -p robot_radius:=0.45
+> ```
+>
+> y guarda el mapa cuando imprime `COVERAGE FINISHED`.
+
 ---
 
 ## 5. Dónde queda cada cosa

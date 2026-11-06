@@ -177,17 +177,59 @@ robot corrige con un pequeño retraso, pero no se sale de la trayectoria.
 
 ---
 
-## 5. Resultados — Parte 2 (mapeo)
+## 5. Mapeo (Parte 2) — procedimiento
 
-<!-- RESULTADOS_PARTE2 -->
+El mapeo se entrega con los mapas capturados durante la clase (pipeline del
+profesor: controlador de fábrica `cmd_vel` → ruedas, `slam_toolbox` en modo
+`mapping` y `map_saver_cli`). Para que la corrida sea reproducible con los medios
+del grupo, en el repo se añadieron dos nodos auxiliares y opciones de lanzamiento:
 
-| Entorno | Mundo | Tamaño | Mapa |
+| Entorno | Mundo | Tamaño | Archivos entregados |
 |---|---|---|---|
-| Pequeño | `office_0` | 11 × 9.75 m | `maps/office_0.pgm` |
-| Grande | `office_4` | 32 × 18.15 m | `maps/office_4.pgm` |
+| Pequeño | `office_0` | 11 × 9.75 m | `maps/office_0.pgm` + `office_0.yaml` |
+| Grande | `office_4` | 32 × 18.15 m | `maps/office_4.pgm` + `office_4.yaml` |
 
-El mapeo usa el controlador de fábrica de Clearpath (`cmd_vel` → ruedas),
-`slam_toolbox` en modo `mapping` y `map_saver_cli` para exportar el `.pgm`.
+**Comandos completos** (ver `docs/GUIA_EJECUCION.md`, sección 4):
+
+```console
+ros2 launch omni_workshop simulation.launch.py world:=office_0 gui:=false \
+    robot_config:=dingo_o_fast.yaml lidar_rate:=20 lidar_ang_res:=1.0
+ros2 launch omni_workshop mapping.launch.py rviz:=false
+ros2 run omni_workshop explore --ros-args -p world:=office_0      # fronteras
+ros2 run nav2_map_server map_saver_cli -f ~/office_0 \
+    --ros-args -r map:=/do100_0000/map -p use_sim_time:=true
+```
+
+En PC de pocos recursos (RTF medido: 0.15 con 2 LiDAR, 0.63 sin LiDAR) conviene
+abrir la simulación con `robot_config:=dingo_o_fast.yaml lidar_rate:=20
+lidar_ang_res:=1.0` (RTF ≈ 0.48): el `slam_toolbox` usa solo el LiDAR frontal,
+que es el que alimenta el mapa.
+
+### 5.1 Hallazgos del mapeo en oficina
+
+Dos comportamientos del Dingo-O en los mundos `office_*` condicionan el diseño,
+y ambos los medimos en Gazebo:
+
+1. **Las puertas están modeladas como dinteles**: en `oficina_0_estructura`
+   los tramos de muro a media altura (z = 2.4 m, tamaño 0.6 m) cierran los
+   vanos. Toda la lógica de navegación a partir del SDF debe filtrar las
+   cajas por su rango vertical, no solo por su tamaño (`coverage.py`
+   `load_boxes`).
+2. **La exploración por fronteras se escapa**: los edificios tienen puertas
+   abiertas al exterior y los rayos del LiDAR llegan a 20–25 m por ellas;
+   el `explore.py` por fronteras sale del edificio. `coverage.py` (ruta
+   de cobertura calculada sobre el plano del mundo) la evita.
+
+### 5.2 Limitaciones de RTF y del controlador de fábrica
+
+- Con el robot de fábrica (2 LiDAR Hokuyo 40 Hz/0.5°) el RTF del PC del grupo
+  es ≈ 0.15: `slam_toolbox` pierde el ritmo del LiDAR. Con 1 LiDAR a 20 Hz/1°
+  el RTF sube a ≈ 0.48 (config `dingo_o_fast.yaml` y argumentos
+  `lidar_rate`/`lidar_ang_res` añadidos al lanzamiento).
+- En el salto del controlador de fábrica al de ruedas propias (`workshop.launch.py`)
+  puede chocar una condición de carrera del `spawner` del `controller_manager`;
+  si el robot no responde, reactivar los controladores:
+  `ros2 run controller_manager spawner platform_velocity_controller -c /do100_0000/controller_manager`.
 
 ---
 
@@ -378,8 +420,9 @@ Con integración, pruebas y margen: **USD 2 500–3 500** por prototipo.
 - La comparación de las tres poses muestra que la odometría de ruedas es una
   buena estimación a corto plazo, pero deriva frente a la pose real cuando hay
   deslizamiento; de ahí la importancia de fusionar con IMU y de usar SLAM.
-- El mapeo con `slam_toolbox` permitió obtener los mapas `.pgm` de un entorno
-  pequeño y uno grande, listos para Nav2.
+- El mapeo con `slam_toolbox` genera los mapas `.pgm` de un entorno pequeño y
+  uno grande (entregados en `maps/`); para PC de pocos recursos se ajustó la
+  frecuencia y la resolución del LiDAR mediendo el coste en RTF.
 
 ---
 

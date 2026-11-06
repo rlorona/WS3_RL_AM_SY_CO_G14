@@ -9,6 +9,7 @@ with feedback on the robot pose and lets SLAM build the map.
 
     ros2 launch omni_workshop simulation.launch.py world:=office_0
     ros2 launch omni_workshop mapping.launch.py rviz:=false
+    # switch to the wheel controller (same as workshop.launch.py does) and run:
     ros2 run omni_workshop coverage --ros-args -p world:=office_0
 
 When it prints COVERAGE FINISHED, save the map:
@@ -26,10 +27,12 @@ import numpy as np
 import rclpy
 import yaml
 from ament_index_python.packages import get_package_share_directory
-from geometry_msgs.msg import TwistStamped
 from rclpy.node import Node
 from rclpy.parameter import Parameter
+from std_msgs.msg import Float64MultiArray
 from tf2_msgs.msg import TFMessage
+
+from omni_workshop.self_controller import inverse_kinematics, saturate, world_to_robot
 
 RES = 0.10          # grid resolution [m]
 VIEW_RADIUS = 1.4   # cells this close to the robot count as observed [m]
@@ -58,9 +61,14 @@ def load_boxes(world_sdf, models_dir):
             if not size:
                 continue
             sx, sy, sz = (float(v) for v in size.split())
-            if sz < 0.3:            # floors
-                continue
             p = parse_pose(c.findtext('pose'))
+            z_bottom = ip[2] + p[2] - sz / 2
+            z_top = ip[2] + p[2] + sz / 2
+            # Skip floors (below the robot) and door lintels (above it). Lintels
+            # are boxes centred at z=2.4: counting them as walls closes every
+            # doorway and leaves the planner trapped in one room.
+            if z_top < 0.05 or z_bottom > 0.35:
+                continue
             ca, sa = math.cos(ip[5]), math.sin(ip[5])
             cx = ip[0] + ca * p[0] - sa * p[1]
             cy = ip[1] + sa * p[0] + ca * p[1]
@@ -97,7 +105,20 @@ class Coverage(Node):
                            os.path.join(worlds, 'models'))
         self.build_grid(boxes)
 
-        self.pub = self.create_publisher(TwistStamped, f'{self.ns}/cmd_vel', 10)
+        self.wheels = self.create_publisher(
+            Float64MultiArray, f'{self.ns}/wheel_velocity_controller/commands', 10)
+        self.gt = None
+        ns_robot = self.ns.strip('/')
+        def on_gt(msg):
+            for t in msg.transforms:
+                if t.child_frame_id == ns_robot:
+                    tr = t.transform.translation
+                    q = t.transform.rotation
+                    yaw = math.atan2(2 * (q.w * q.z + q.x * q.y),
+                                     1 - 2 * (q.y * q.y + q.z * q.z))
+                    self.gt = (tr.x, tr.y, yaw)
+        # ros_gz_bridge: /model/<ns>/robot/pose (gz.msgs.Pose_V -> tf2_msgs/TFormer)
+        self.create_subscription(TFMessage, f'/model/{ns_robot}/robot/pose', on_gt, 100)
         from tf2_ros import Buffer
         self.buffer = Buffer(node=self)
         self.create_subscription(TFMessage, f'{self.ns}/tf', self.on_tf, 100)
@@ -111,6 +132,9 @@ class Coverage(Node):
         self.observed_at = 0.0
         self.started = False
         self.finished = False
+        self.spin_down = 0.0
+        self.unstick_until = 0.0
+        self.escape = 0.0
         self.t0 = self.get_clock().now().nanoseconds * 1e-9
         self.create_timer(0.1, self.step)
         self.get_logger().info(
@@ -147,6 +171,18 @@ class Coverage(Node):
                 self.blocked = (b | np.roll(b, 1, 0) | np.roll(b, -1, 0)
                                 | np.roll(b, 1, 1) | np.roll(b, -1, 1))
         self.free = ~self.blocked
+        # The spawn pose usually sits inside the inflated band of a wall, and a
+        # naive "nearest free cell" can land in a tiny pocket between furniture.
+        # Keep only the largest connected component: that is the real floor.
+        try:
+            from scipy.ndimage import label
+            lab, n = label(self.free)
+            if n > 1:
+                sizes = np.bincount(lab.ravel())
+                sizes[0] = 0
+                self.free = lab == int(np.argmax(sizes))
+        except ImportError:
+            pass
 
     def to_cell(self, x, y):
         return (int((x - self.x0) / RES), int((y - self.y0) / RES))
@@ -163,15 +199,26 @@ class Coverage(Node):
             self.buffer.set_transform(tf, 'coverage')
 
     def pose(self):
-        try:
-            tf = self.buffer.lookup_transform('odom', 'base_link', rclpy.time.Time())
-        except Exception:
-            return None
-        t = tf.transform.translation
-        q = tf.transform.rotation
-        yaw = math.atan2(2 * (q.w * q.z + q.x * q.y), 1 - 2 * (q.y * q.y + q.z * q.z))
-        # odom frame = start pose of the robot
-        return t.x + self.start[0], t.y + self.start[1], yaw
+        # With the wheel_velocity_controller the platform odometry is dead (the
+        # mecanum controller that publishes it is switched off), and SLAM snaps
+        # to a wrong loop closure by tens of metres. The reliable pose inside
+        # Gazebo is the model pose bridged from /model/.../robot/pose (world
+        # frame). Fall back to odom+start only if that bridge is not running.
+        if self.gt is not None:
+            x, y, yaw = self.gt
+            return x, y, yaw
+        for parent in ('odom', 'map'):
+            try:
+                tf = self.buffer.lookup_transform(parent, 'base_link', rclpy.time.Time())
+            except Exception:
+                continue
+            t = tf.transform.translation
+            q = tf.transform.rotation
+            yaw = math.atan2(2 * (q.w * q.z + q.x * q.y),
+                             1 - 2 * (q.y * q.y + q.z * q.z))
+            # map/odom frame origin = start pose of the robot
+            return t.x + self.start[0], t.y + self.start[1], yaw
+        return None
 
     # --- planning -----------------------------------------------------------
     def neighbours(self, ix, iy):
@@ -261,15 +308,21 @@ class Coverage(Node):
         return None
 
     # --- control ------------------------------------------------------------
-    def publish(self, vx, vy):
-        msg = TwistStamped()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'base_link'
-        msg.twist.linear.x, msg.twist.linear.y = vx, vy
-        self.pub.publish(msg)
-
     def stop(self):
-        self.publish(0.0, 0.0)
+        self.publish((0.0, 0.0, 0.0), 0.0, 0.0, 0.0)
+
+    def publish(self, pose, vx, vy, w):
+        # The mecanum_drive_controller behind cmd_vel barely moves this robot:
+        # the wheels churn at ~10 rad/s with almost no traction. In the
+        # workshop the platform is driven directly at wheel level (the same
+        # kinematics implemented for the self controller), so use that here too.
+        vr = world_to_robot(pose[2], vx, vy, w)
+        msg = Float64MultiArray(data=list(saturate(inverse_kinematics(*vr))))
+        self.wheels.publish(msg)
+
+    @staticmethod
+    def wrap(a):
+        return (a + math.pi) % (2 * math.pi) - math.pi
 
     def step(self):
         if self.finished:
@@ -289,23 +342,36 @@ class Coverage(Node):
         if self.path:
             tx, ty = self.path[0]
             dx, dy = tx - pose[0], ty - pose[1]
-            if math.hypot(dx, dy) < 0.15:
+            dist = math.hypot(dx, dy)
+            if dist < 0.15:
                 self.path.pop(0)
+                self.stop()
                 return
             if self.last_pose is not None and math.hypot(
                     pose[0] - self.last_pose[0], pose[1] - self.last_pose[1]) > 0.03:
                 self.last_progress = now
             self.last_pose = pose
-            if now - self.last_progress > 8.0:
-                self.get_logger().warn('No progress, replanning')
-                self.path = []
+            if now - self.last_progress > 10.0:
+                # Wedged (e.g. in a corner of two walls): rotate 90 in place so
+                # the next turn-and-drive leg pulls it out.
+                self.path = self.path or []
+                self.get_logger().warn('No progress: unstick joystick action')
+                self.escape = 1.0 if now % 2.0 < 1.0 else -1.0
+                self.unstick_until = now + 3.0
+                self.last_progress = now
+            if now < self.unstick_until:
+                self.publish(pose, 0.0, 0.0, max(-0.8, min(0.8, 1.5 * self.escape)))
                 return
-            cy, sy = math.cos(pose[2]), math.sin(pose[2])
-            ex = cy * dx + sy * dy
-            ey = -sy * dx + cy * dy
-            self.publish(max(-self.vmax, min(self.vmax, 1.5 * ex)),
-                         max(-self.vmax, min(self.vmax, 1.5 * ey)))
-            self.distance += 0.0
+            # Movement primitive for this Gazebo mecanum: commands with vx and
+            # vy together slip (measured: a 0.42 m/s diagonal turned the robot
+            # 1 rad without advancing). So first turn in place towards the
+            # waypoint, then drive forward along x with pure tracking.
+            err = self.wrap(math.atan2(dy, dx) - pose[2])
+            if abs(err) > 0.12:
+                self.publish(pose, 0.0, 0.0,
+                             max(-0.8, min(0.8, 1.5 * err)))
+            else:
+                self.publish(pose, max(-self.vmax, min(self.vmax, 1.5 * dist)), 0.0, 0.0)
             return
 
         if now - self.observed_at < 0.5:
