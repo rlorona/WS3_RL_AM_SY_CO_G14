@@ -29,6 +29,7 @@ cp -f "${ROOT}/src/docs/REPORT_WS3.md" "${STAGE}/Entregable_2_Documentacion/"
 
 cp -f /home/ricardo/Downloads/WS3G14TrayectoriaRASC.mp4 "${STAGE}/Entregable_3_Videos/"
 cp -f "${ROOT}/src/entregable 2/mapeo_coral.mp4" "${STAGE}/Entregable_3_Videos/"
+cp -f /home/ricardo/Downloads/Mapeo_Office_03_Trim.mp4 "${STAGE}/Entregable_3_Videos/mapeo_office_03.mp4"
 
 tar -C "${STAGE}" -cf "${OUT}" \
     Entregable_1_Codigo \
